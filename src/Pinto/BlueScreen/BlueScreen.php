@@ -376,6 +376,16 @@ class BlueScreen
 	public function formatMessage(\Throwable $exception): string
 	{
 		$msg = Helpers::encodeString(trim((string) $exception->getMessage()), self::MaxMessageLength, showWhitespaces: false);
+        $re = '/(.+):(.+) \/(.+) on (.+)/m';
+        preg_match_all($re, $msg, $matches, PREG_SET_ORDER, 0);
+
+        $match = $matches[0];
+
+        $msg = '<span class="Pinto-w100"><a href="#" class="Pinto-editor">' . $match[1] . '</a></span>';
+        $msg .= '<span class="Pinto-msg">' . $match[2] . '</span>';
+        $msg .= '<span class="Pinto-file">' . $match[3] . '</span>';
+
+        return $msg;
 
 		// highlight 'string'
 		$msg = preg_replace(

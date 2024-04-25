@@ -43,3 +43,15 @@ if (!function_exists('bdump')) {
 		return $var;
 	}
 }
+
+if (!function_exists('splitCapitalized')) {
+	/**
+	 * Pinto\Debugger::barDump() shortcut.
+	 * @PintoSkipLocation
+	 */
+	function splitCapitalized(string &$str): void
+	{
+        $pieces = preg_split('/(?=[A-Z])/',$str);
+        $str = implode(' ', $pieces);
+	}
+}

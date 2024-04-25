@@ -15,14 +15,17 @@ $title = $ex instanceof \ErrorException
 	: get_debug_type($ex);
 $code = $ex->getCode() ? ' #' . $ex->getCode() : '';
 
+splitCapitalized($title);
+
 ?>
 <section class="Pinto-section Pinto-section--error">
-	<?php if ($ex->getMessage()): ?><p><?= Helpers::escapeHtml($title . $code) ?></p><?php endif ?>
+    <div class="Pintoerror-inside">
+	<?php if ($ex->getMessage()): ?><p class="Pinto-title"><?= Helpers::escapeHtml($title . $code) ?></p><?php endif ?>
 
 
-	<h1><span><?= $this->formatMessage($ex) ?: Helpers::escapeHtml($title . $code) ?></span>
+	<h1><?= $this->formatMessage($ex) ?: Helpers::escapeHtml($title . $code) ?>
 <?php foreach ($actions as $item): ?>
-	<a href="<?= Helpers::escapeHtml($item['link']) ?>" class="Pinto-action"<?= empty($item['external']) ? '' : ' target="_blank" rel="noreferrer noopener"'?>><?= Helpers::escapeHtml($item['label']) ?>&#x25ba;</a>
+	<a href="<?= Helpers::escapeHtml($item['link']) ?>" class="Pinto-action"<?= empty($item['external']) ? '' : ' target="_blank" rel="noreferrer noopener"'?>><?= Helpers::escapeHtml($item['label']) ?>&nbsp;&#x25ba;</a>
 <?php endforeach ?>
 	</h1>
 
@@ -31,4 +34,5 @@ $code = $ex->getCode() ? ' #' . $ex->getCode() : '';
 		<a href="#PintoCaused<?= count($exceptions) + 1 ?>">Caused by <?= Helpers::escapeHtml(get_debug_type($ex->getPrevious())) ?></a>
 	</div>
 	<?php endif ?>
+    </div>
 </section>

@@ -1,0 +1,11 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+.Pinto-tab-label {
+	user-select: none;
+}
+
+.Pinto-tab-panel:not(.Pinto-active) {
+	display: none;
+}

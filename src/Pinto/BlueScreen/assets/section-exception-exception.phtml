@@ -1,0 +1,20 @@
+<?php
+
+
+namespace Pinto;
+
+/**
+ * @var \Throwable $ex
+ * @var callable $dump
+ */
+
+if (count(get_mangled_object_vars($ex)) <= count(get_mangled_object_vars(new \Exception))) {
+	return;
+}
+?>
+<section class="Pinto-section">
+	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle Pinto-collapsed">Exception</a></h2>
+	<div class="Pinto-section-panel Pinto-collapsed">
+		<?= $dump($ex) ?>
+	</div>
+</section>

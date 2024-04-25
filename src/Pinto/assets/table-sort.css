@@ -1,0 +1,15 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+.Pinto-sortable > :first-child > tr:first-child > * {
+	position: relative;
+}
+
+.Pinto-sortable > :first-child > tr:first-child > *:hover:before {
+	position: absolute;
+	right: .3em;
+	content: "\21C5";
+	opacity: .4;
+	font-weight: normal;
+}

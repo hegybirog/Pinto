@@ -1,0 +1,72 @@
+<?php
+
+
+namespace Pinto;
+
+/**
+ * @var \Throwable $exception
+ * @var array[] $actions
+ * @var string[] $info
+ * @var string $source
+ * @var ?array $lastError
+ * @var string[] $httpHeaders
+ * @var callable $dump
+ * @var array $snapshot
+ * @var bool $showEnvironment
+ * @var BlueScreen $this
+ * @var bool $headersSent
+ * @var ?string $headersFile
+ * @var ?int $headersLine
+ * @var ?array $obStatus
+ * @var \Generator[] $generators
+ * @var \Fiber[] $fibers
+ */
+?>
+<Pinto-div id="Pinto-bs" itemscope>
+	<a id="Pinto-bs-toggle" href="#" class="Pinto-toggle">&#xfeff;</a>
+	<div class="Pinto-bs-main">
+<?php $ex = $exception; $exceptions = []; ?>
+<?php require __DIR__ . '/section-exception.phtml' ?>
+
+<?php require __DIR__ . '/section-lastMutedError.phtml' ?>
+
+<?php $bottomPanels = [] ?>
+<?php foreach ($this->renderPanels(null) as $panel): ?>
+<?php if (!empty($panel->bottom)) { $bottomPanels[] = $panel; continue; } ?>
+<?php $collapsedClass = !isset($panel->collapsed) || $panel->collapsed ? ' Zoxigen-collapsed' : ''; ?>
+		<section class="Pinto-section">
+			<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= $collapsedClass ?>"><?= Helpers::escapeHtml($panel->tab) ?></a></h2>
+
+			<div class="Pinto-section-panel<?= $collapsedClass ?>">
+			<?= $panel->panel ?>
+			</div>
+		</section>
+<?php endforeach ?>
+
+<?php require __DIR__ . '/section-environment.phtml' ?>
+
+<?php require __DIR__ . '/section-cli.phtml' ?>
+
+<?php require __DIR__ . '/section-http.phtml' ?>
+
+<?php foreach ($bottomPanels as $panel): ?>
+		<section class="Pinto-section">
+			<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle"><?= Helpers::escapeHtml($panel->tab) ?></a></h2>
+
+			<div class="Pinto-section-panel">
+			<?= $panel->panel ?>
+			</div>
+		</section>
+<?php endforeach ?>
+
+		<footer>
+			<ul>
+				<li><b><a href="https://github.com/sponsors/dg" target="_blank" rel="noreferrer noopener">Please support Pinto via a donation 💙️</a></b></li>
+				<li>Report generated at <?= date('Y/m/d H:i:s') ?></li>
+				<?php foreach ($info as $item): ?><li><?= Helpers::escapeHtml($item) ?></li><?php endforeach ?>
+			</ul>
+			<div class="Pinto-footer-logo"><a href="https://pinto.zoxigen.com" rel="noreferrer"></a></div>
+		</footer>
+	</div>
+	<meta itemprop=Pinto-snapshot content=<?= Dumper::formatSnapshotAttribute($snapshot) ?>>
+</Pinto-div>

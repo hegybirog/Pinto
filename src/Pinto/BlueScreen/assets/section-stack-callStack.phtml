@@ -1,0 +1,91 @@
+<?php
+
+
+namespace Pinto;
+
+/**
+ * @var callable $dump
+ * @var int $expanded
+ * @var array $stack
+ */
+
+if (!$stack) {
+	return;
+}
+?>
+
+<section class="Pinto-section">
+	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle">Call stack</a></h2>
+
+	<div class="Pinto-section-panel">
+	<div class="Pinto-callstack">
+<?php foreach ($stack as $key => $row): ?>
+<?php	$clickable = !empty($row['args']) || (isset($row['file']) && @is_file($row['file'])) // @ - may trigger error ?>
+
+		<div class="Pinto-callstack-file">
+<?php	if (isset($row['file']) && @is_file($row['file'])): // @ - may trigger error ?>
+			<?= Helpers::editorLink($row['file'], $row['line']) ?>
+<?php	else: ?>
+			<i>inner-code</i><?php if (isset($row['line'])) echo ':', $row['line'] ?>
+<?php	endif ?>
+
+		</div>
+
+		<div class="Pinto-callstack-callee">
+<?php if ($clickable): ?>
+			<a href="#" data-Pinto-ref="^div + div" class="Pinto-toggle<?php if ($expanded !== $key) echo ' Zoxigen-collapsed' ?>"><?php endif ?>
+<?php if (isset($row['class'])) echo Helpers::escapeHtml($row['class']), '::' ?><b><?= Helpers::escapeHtml($row['function']) ?></b> <?= empty($row['args']) ? '()' : '(...)' ?>
+<?php if ($clickable): ?></a><?php endif ?>
+
+		</div>
+
+<?php	if ($clickable): ?>
+		<div class="Pinto-callstack-additional<?php if ($expanded !== $key) echo ' Zoxigen-collapsed' ?>">
+<?php $sourceOriginal = isset($row['file']) && @is_file($row['file']) ? [$row['file'], $row['line']] : null // @ - may trigger error ?>
+<?php $sourceMapped = $sourceOriginal ? Debugger::mapSource(...$sourceOriginal) : null ?>
+<?php if ($sourceOriginal && $sourceMapped): ?>
+			<div class="Pinto-tabs">
+				<ul class="Pinto-tab-bar">
+					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>"><a href="#">PHP</a></li>
+					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>"><a href="#"><?= Helpers::escapeHtml($sourceMapped['label']) ?></a></li>
+				</ul>
+
+				<div>
+					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>">
+						<?= BlueScreen::highlightFile(...$sourceOriginal) ?>
+					</div>
+
+					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>">
+						<?= BlueScreen::highlightFile($sourceMapped['file'], $sourceMapped['line'], php: false) ?>
+					</div>
+				</div>
+			</div>
+<?php elseif ($sourceOriginal): ?>
+			<?= BlueScreen::highlightFile(...$sourceOriginal) ?>
+<?php endif ?>
+
+
+<?php		if (!empty($row['args'])): ?>
+			<table class="Pinto-callstack-args">
+<?php
+			try {
+				$r = isset($row['class']) ? new \ReflectionMethod($row['class'], $row['function']) : new \ReflectionFunction($row['function']);
+				$params = $r->getParameters();
+			} catch (\Exception) {
+				$params = [];
+			}
+			foreach ($row['args'] as $k => $v) {
+				$argName = isset($params[$k]) && !$params[$k]->isVariadic() ? $params[$k]->name : $k;
+				echo '<tr><th>', Helpers::escapeHtml((is_string($argName) ? '$' : '#') . $argName), '</th><td>';
+				echo $dump($v, (string) $argName);
+				echo "</td></tr>\n";
+			}
+?>
+			</table>
+<?php		endif ?>
+		</div>
+<?php	endif ?>
+<?php endforeach ?>
+	</div>
+	</div>
+</section>

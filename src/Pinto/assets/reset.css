@@ -1,0 +1,386 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+:root {
+	--Pinto-space: 16px;
+}
+
+@media (max-width: 600px) {
+	:root {
+		--Pinto-space: 8px;
+	}
+}
+
+Pinto-div:not(a b),
+Pinto-div:not(a b) * {
+	font: inherit;
+	line-height: inherit;
+	color: inherit;
+	background: transparent;
+	margin: 0;
+	padding: 0;
+	border: none;
+	text-align: inherit;
+	list-style: inherit;
+	opacity: 1;
+	border-radius: 0;
+	box-shadow: none;
+	text-shadow: none;
+	box-sizing: border-box;
+	text-decoration: none;
+	text-transform: inherit;
+	white-space: inherit;
+	float: none;
+	clear: none;
+	max-width: initial;
+	min-width: initial;
+	max-height: initial;
+	min-height: initial;
+}
+
+Pinto-div:not(a b) *:hover {
+	color: inherit;
+	background: transparent;
+}
+
+Pinto-div:not(a b) *:not(svg):not(img):not(table) {
+	width: initial;
+	height: initial;
+}
+
+Pinto-div:not(a b):before,
+Pinto-div:not(a b):after,
+Pinto-div:not(a b) *:before,
+Pinto-div:not(a b) *:after {
+	all: unset;
+}
+
+Pinto-div:not(a b) b,
+Pinto-div:not(a b) strong {
+	font-weight: bold;
+}
+
+Pinto-div:not(a b) small {
+	font-size: smaller;
+}
+
+Pinto-div:not(a b) i,
+Pinto-div:not(a b) em {
+	font-style: italic;
+}
+
+Pinto-div:not(a b) big {
+	font-size: larger;
+}
+
+Pinto-div:not(a b) small,
+Pinto-div:not(a b) sub,
+Pinto-div:not(a b) sup {
+	font-size: smaller;
+}
+
+Pinto-div:not(a b) ins {
+	text-decoration: underline;
+}
+
+Pinto-div:not(a b) del {
+	text-decoration: line-through;
+}
+
+Pinto-div:not(a b) table {
+	border-collapse: collapse;
+}
+
+Pinto-div:not(a b) pre {
+	font-family: monospace;
+	white-space: pre;
+}
+
+Pinto-div:not(a b) code,
+Pinto-div:not(a b) kbd,
+Pinto-div:not(a b) samp {
+	font-family: monospace;
+}
+
+Pinto-div:not(a b) input {
+	background-color: white;
+	padding: 1px;
+	border: 1px solid;
+}
+
+Pinto-div:not(a b) textarea {
+	background-color: white;
+	border: 1px solid;
+	padding: 2px;
+	white-space: pre-wrap;
+}
+
+Pinto-div:not(a b) select {
+	border: 1px solid;
+	white-space: pre;
+}
+
+Pinto-div:not(a b) article,
+Pinto-div:not(a b) aside,
+Pinto-div:not(a b) details,
+Pinto-div:not(a b) div,
+Pinto-div:not(a b) figcaption,
+Pinto-div:not(a b) footer,
+Pinto-div:not(a b) form,
+Pinto-div:not(a b) header,
+Pinto-div:not(a b) hgroup,
+Pinto-div:not(a b) main,
+Pinto-div:not(a b) nav,
+Pinto-div:not(a b) section,
+Pinto-div:not(a b) summary,
+Pinto-div:not(a b) pre,
+Pinto-div:not(a b) p,
+Pinto-div:not(a b) dl,
+Pinto-div:not(a b) dd,
+Pinto-div:not(a b) dt,
+Pinto-div:not(a b) blockquote,
+Pinto-div:not(a b) figure,
+Pinto-div:not(a b) address,
+Pinto-div:not(a b) h1,
+Pinto-div:not(a b) h2,
+Pinto-div:not(a b) h3,
+Pinto-div:not(a b) h4,
+Pinto-div:not(a b) h5,
+Pinto-div:not(a b) h6,
+Pinto-div:not(a b) ul,
+Pinto-div:not(a b) ol,
+Pinto-div:not(a b) li,
+Pinto-div:not(a b) hr {
+	display: block;
+}
+
+Pinto-div:not(a b) a,
+Pinto-div:not(a b) b,
+Pinto-div:not(a b) big,
+Pinto-div:not(a b) code,
+Pinto-div:not(a b) em,
+Pinto-div:not(a b) i,
+Pinto-div:not(a b) small,
+Pinto-div:not(a b) span,
+Pinto-div:not(a b) strong {
+	display: inline;
+}
+
+Pinto-div:not(a b) table {
+	display: table;
+}
+
+Pinto-div:not(a b) tr {
+	display: table-row;
+}
+
+Pinto-div:not(a b) col {
+	display: table-column;
+}
+
+Pinto-div:not(a b) colgroup {
+	display: table-column-group;
+}
+
+Pinto-div:not(a b) tbody {
+	display: table-row-group;
+}
+
+Pinto-div:not(a b) thead {
+	display: table-header-group;
+}
+
+Pinto-div:not(a b) tfoot {
+	display: table-footer-group;
+}
+
+Pinto-div:not(a b) td {
+	display: table-cell;
+}
+
+Pinto-div:not(a b) th {
+	display: table-cell;
+}
+
+
+
+/* TableSort */
+Pinto-div:not(a b) .Pinto-sortable > :first-child > tr:first-child > * {
+	position: relative;
+}
+
+Pinto-div:not(a b) .Pinto-sortable > :first-child > tr:first-child > *:hover:before {
+	position: absolute;
+	right: .3em;
+	content: "\21C5";
+	opacity: .4;
+	font-weight: normal;
+}
+
+
+/* dump */
+Pinto-div:not(a b) .Pinto-dump div {
+	padding-left: 3ex;
+}
+
+Pinto-div:not(a b) .Pinto-dump div div {
+	border-left: 1px solid rgba(0, 0, 0, .1);
+	margin-left: .5ex;
+}
+
+Pinto-div:not(a b) .Pinto-dump div div:hover {
+	border-left-color: rgba(0, 0, 0, .25);
+}
+
+Pinto-div:not(a b) .Pinto-dump {
+	background: #FDF5CE;
+	padding: .4em .7em;
+	border: 1px dotted silver;
+	overflow: auto;
+}
+
+Pinto-div:not(a b) table .Pinto-dump.Pinto-dump { /* overwrite .Zoxigen-dump.Zoxigen-light etc. */
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+
+Pinto-div:not(a b) .Pinto-dump-location {
+	color: gray;
+	font-size: 80%;
+	text-decoration: none;
+	background: none;
+	opacity: .5;
+	float: right;
+	cursor: pointer;
+}
+
+Pinto-div:not(a b) .Pinto-dump-location:hover,
+Pinto-div:not(a b) .Pinto-dump-location:focus {
+	color: gray;
+	background: none;
+	opacity: 1;
+}
+
+Pinto-div:not(a b) .Pinto-dump-array,
+Pinto-div:not(a b) .Pinto-dump-object {
+	color: #C22;
+}
+
+Pinto-div:not(a b) .Pinto-dump-string {
+	color: #35D;
+	white-space: break-spaces;
+}
+
+Pinto-div:not(a b) div.Pinto-dump-string {
+	position: relative;
+	padding-left: 3.5ex;
+}
+
+Pinto-div:not(a b) .Pinto-dump-lq {
+	margin-left: calc(-1ex - 1px);
+}
+
+Pinto-div:not(a b) div.Pinto-dump-string:before {
+	content: '';
+	position: absolute;
+	left: calc(3ex - 1px);
+	top: 1.5em;
+	bottom: 0;
+	border-left: 1px solid rgba(0, 0, 0, .1);
+}
+
+Pinto-div:not(a b) .Pinto-dump-virtual span,
+Pinto-div:not(a b) .Pinto-dump-dynamic span,
+Pinto-div:not(a b) .Pinto-dump-string span {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+Pinto-div:not(a b) .Pinto-dump-virtual i,
+Pinto-div:not(a b) .Pinto-dump-dynamic i,
+Pinto-div:not(a b) .Pinto-dump-string i {
+	font-size: 80%;
+	font-style: normal;
+	color: rgba(0, 0, 0, 0.5);
+	user-select: none;
+}
+
+Pinto-div:not(a b) .Pinto-dump-number {
+	color: #090;
+}
+
+Pinto-div:not(a b) .Pinto-dump-null,
+Pinto-div:not(a b) .Pinto-dump-bool {
+	color: #850;
+}
+
+Pinto-div:not(a b) .Pinto-dump-virtual {
+	font-style: italic;
+}
+
+Pinto-div:not(a b) .Pinto-dump-public::after {
+	content: ' pub';
+}
+
+Pinto-div:not(a b) .Pinto-dump-protected::after {
+	content: ' pro';
+}
+
+Pinto-div:not(a b) .Pinto-dump-private::after {
+	content: ' pri';
+}
+
+Pinto-div:not(a b) .Pinto-dump-public::after,
+Pinto-div:not(a b) .Pinto-dump-protected::after,
+Pinto-div:not(a b) .Pinto-dump-private::after,
+Pinto-div:not(a b) .Pinto-dump-hash {
+	font-size: 85%;
+	color: rgba(0, 0, 0, 0.5);
+}
+
+Pinto-div:not(a b) .Pinto-dump-indent {
+	display: none;
+}
+
+Pinto-div:not(a b) .Pinto-dump-highlight {
+	background: #C22;
+	color: white;
+	border-radius: 2px;
+	padding: 0 2px;
+	margin: 0 -2px;
+}
+
+Pinto-div:not(a b) span[data-Pinto-href] {
+	border-bottom: 1px dotted rgba(0, 0, 0, .2);
+}
+
+
+/* toggle */
+Pinto-div:not(a b) .Pinto-toggle:after {
+	content: '';
+	display: inline-block;
+	vertical-align: middle;
+	line-height: 0;
+	border-top: .6ex solid;
+	border-right: .6ex solid transparent;
+	border-left: .6ex solid transparent;
+	transform: scale(1, 1.5);
+	margin: 0 .2ex 0 .7ex;
+	transition: .1s transform;
+	opacity: .5;
+}
+
+Pinto-div:not(a b) .Pinto-toggle.Pinto-collapsed:after {
+	transform: rotate(-90deg) scale(1, 1.5) translate(.1ex, 0);
+}
+
+
+/* tabs */
+Pinto-div:not(a b) .Pinto-tab-label {
+	user-select: none;
+}
+
+Pinto-div:not(a b) .Pinto-tab-panel:not(.Pinto-active) {
+	display: none;
+}

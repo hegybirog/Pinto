@@ -1,0 +1,304 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+/* common styles */
+#Pinto-debug {
+	--Pinto-space: 10px;
+	display: none;
+	direction: ltr;
+}
+
+body#Pinto-debug { /* in popup window */
+	display: block;
+}
+
+#Pinto-debug:not(body) {
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+
+#Pinto-debug a {
+	color: #125EAE;
+	text-decoration: none;
+}
+
+#Pinto-debug a:hover,
+#Pinto-debug a:focus {
+	background-color: #125EAE;
+	color: white;
+}
+
+#Pinto-debug h2,
+#Pinto-debug h3 {
+	font-weight: bold;
+}
+
+#Pinto-debug :where(:is(
+	h1, h2, h3, h4, h5, h6,
+	p,
+	ol, ul, dl,
+	pre, table, hr,
+	.Pinto-inner,
+	.Pinto-inner-container,
+	.Pinto-inner-container > *
+):not(:first-child)) {
+	margin-top: var(--Pinto-space);
+}
+
+#Pinto-debug table {
+	background: #FDF5CE;
+	width: 100%;
+}
+
+#Pinto-debug tr:nth-child(2n) td {
+	background: rgba(0, 0, 0, 0.02);
+}
+
+#Pinto-debug td,
+#Pinto-debug th {
+	border: 1px solid #E6DFBF;
+	padding: 2px 5px;
+	vertical-align: top;
+	text-align: left;
+}
+
+#Pinto-debug th {
+	background: #F4F3F1;
+	color: #655E5E;
+	font-size: 90%;
+	font-weight: bold;
+}
+
+#Pinto-debug pre,
+#Pinto-debug code {
+	font: 9pt/1.5 Consolas, monospace;
+}
+
+#Pinto-debug table .Pinto-right {
+	text-align: right;
+}
+
+#Pinto-debug svg {
+	display: inline;
+}
+
+#Pinto-debug .Pinto-dump {
+	margin: 0;
+	padding: 2px 5px;
+}
+
+
+/* bar */
+#Pinto-debug-bar {
+	font: normal normal 13px/1.55 Tahoma, sans-serif;
+	color: #333;
+	border: 1px solid #c9c9c9;
+	background: #EDEAE0 url('data:image/png;base64,R0lGODlhAQAUALMAAOzq4e/t5e7s4/Dt5vDu5e3r4vDu5uvp4O/t5AAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAABABQAAAQM0EgySEAYi1LA+UcEADs=') top;
+	background-size: 1em;
+	position: fixed;
+
+	min-width: 50px;
+	white-space: nowrap;
+
+	z-index: 30000;
+	opacity: .9;
+	transition: opacity 0.2s;
+	will-change: opacity, top, left;
+
+	border-radius: 3px;
+	box-shadow: 1px 1px 10px rgba(0, 0, 0, .15);
+}
+
+#Pinto-debug-bar:hover {
+	opacity: 1;
+	transition: opacity 0.1s;
+}
+
+#Pinto-debug-bar .Pinto-row {
+	list-style: none none;
+	display: flex;
+	margin: 0;
+}
+
+#Pinto-debug-bar .Pinto-row:not(:first-child) {
+	background: #d5d2c6;
+	opacity: .8;
+}
+
+#Pinto-debug-bar .Pinto-row[data-Pinto-group="ajax"] {
+	animation: Pinto-row-flash .2s ease;
+}
+
+@keyframes Pinto-row-flash {
+	0% {
+		background: #c9c0a0;
+	}
+}
+
+#Pinto-debug-bar .Pinto-row:not(:first-child) li:first-child {
+	width: 4.1em;
+	text-align: center;
+}
+
+#Pinto-debug-bar img {
+	vertical-align: bottom;
+	position: relative;
+	top: -2px;
+}
+
+#Pinto-debug-bar svg {
+	vertical-align: bottom;
+	width: 1.23em;
+	height: 1.55em;
+}
+
+#Pinto-debug-bar .Pinto-label {
+	margin-left: .2em;
+}
+
+#Pinto-debug-bar li > a,
+#Pinto-debug-bar li > span {
+	color: #000;
+	display: block;
+	padding: 0 .4em;
+}
+
+#Pinto-debug-bar li > a:hover {
+	color: black;
+	background: #c3c1b8;
+}
+
+#Pinto-debug-bar li:first-child {
+	cursor: move;
+}
+
+#Pinto-debug-logo svg {
+	width: 3.4em;
+	margin: 0 .2em 0 .5em;
+}
+
+
+/* panels */
+#Pinto-debug .Pinto-panel {
+	display: none;
+	font: normal normal 12px/1.5 sans-serif;
+	background: white;
+	color: #333;
+	text-align: left;
+}
+
+body#Pinto-debug .Pinto-panel { /* in popup window */
+	display: block;
+}
+
+#Pinto-debug h1 {
+	font: normal normal 23px/1.4 Tahoma, sans-serif;
+	line-height: 1;
+	color: #575753;
+	margin: 0;
+	word-wrap: break-word;
+}
+
+#Pinto-debug .Pinto-inner {
+	overflow: auto;
+	flex: 1;
+}
+
+#Pinto-debug .Pinto-panel .Pinto-icons {
+	display: none;
+}
+
+#Pinto-debug .Pinto-panel-ajax h1::after,
+#Pinto-debug .Pinto-panel-redirect h1::after {
+	content: 'ajax';
+	float: right;
+	font-size: 65%;
+	margin: 0 .3em;
+}
+
+#Pinto-debug .Pinto-panel-redirect h1::after {
+	content: 'redirect';
+}
+
+#Pinto-debug .Pinto-mode-peek,
+#Pinto-debug .Pinto-mode-float {
+	position: fixed;
+	flex-direction: column;
+	padding: var(--Pinto-space);
+	min-width: 200px;
+	min-height: 80px;
+	border-radius: 5px;
+	box-shadow: 1px 1px 20px rgba(102, 102, 102, 0.36);
+	border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+#Pinto-debug .Pinto-mode-peek,
+#Pinto-debug .Pinto-mode-float:not(.Pinto-panel-resized) {
+	max-width: 700px;
+	max-height: 500px;
+}
+
+@media (max-height: 555px) {
+	#Pinto-debug .Pinto-mode-peek,
+	#Pinto-debug .Pinto-mode-float:not(.Pinto-panel-resized) {
+		max-height: 100vh;
+	}
+}
+
+#Pinto-debug .Pinto-mode-peek h1 {
+	cursor: move;
+}
+
+#Pinto-debug .Pinto-mode-float {
+	display: flex;
+	opacity: .95;
+	transition: opacity 0.2s;
+	will-change: opacity, top, left;
+	overflow: auto;
+	resize: both;
+}
+
+#Pinto-debug .Pinto-focused {
+	display: flex;
+	opacity: 1;
+	transition: opacity 0.1s;
+}
+
+#Pinto-debug .Pinto-mode-float h1 {
+	cursor: move;
+	padding-right: 25px;
+}
+
+#Pinto-debug .Pinto-mode-float .Pinto-icons {
+	display: block;
+	position: absolute;
+	top: 0;
+	right: 5px;
+	font-size: 18px;
+}
+
+#Pinto-debug .Pinto-mode-window {
+	padding: var(--Pinto-space);
+}
+
+#Pinto-debug .Pinto-icons a {
+	color: #575753;
+}
+
+#Pinto-debug .Pinto-icons a:hover {
+	color: white;
+}
+
+
+#Pinto-debug .Pinto-inner-container {
+	min-width: 100%;
+	float: left;
+}
+
+@media print {
+	#Pinto-debug * {
+		display: none;
+	}
+}

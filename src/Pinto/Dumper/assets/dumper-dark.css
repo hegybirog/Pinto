@@ -1,0 +1,145 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+.Pinto-dump.Pinto-dark {
+	text-align: left;
+	color: #f8f8f2;
+	background: #29292e;
+	border-radius: 4px;
+	padding: var(--Pinto-space);
+	margin: var(--Pinto-space) 0;
+	word-break: break-all;
+	white-space: pre-wrap;
+}
+
+.Pinto-dump.Pinto-dark div {
+	padding-left: 2.5ex;
+}
+
+.Pinto-dump.Pinto-dark div div {
+	border-left: 1px solid rgba(255, 255, 255, .1);
+	margin-left: .5ex;
+}
+
+.Pinto-dump.Pinto-dark div div:hover {
+	border-left-color: rgba(255, 255, 255, .25);
+}
+
+.Pinto-dark .Pinto-dump-location {
+	color: silver;
+	font-size: 80%;
+	text-decoration: none;
+	background: none;
+	opacity: .5;
+	float: right;
+	cursor: pointer;
+}
+
+.Pinto-dark .Pinto-dump-location:hover,
+.Pinto-dark .Pinto-dump-location:focus {
+	opacity: 1;
+}
+
+.Pinto-dark .Pinto-dump-array,
+.Pinto-dark .Pinto-dump-object {
+	color: #f69c2e;
+	user-select: text;
+}
+
+.Pinto-dark .Pinto-dump-string {
+	color: #3cdfef;
+	white-space: break-spaces;
+}
+
+.Pinto-dark div.Pinto-dump-string {
+	position: relative;
+	padding-left: 3.5ex;
+}
+
+.Pinto-dark .Pinto-dump-lq {
+	margin-left: calc(-1ex - 1px);
+}
+
+.Pinto-dark div.Pinto-dump-string:before {
+	content: '';
+	position: absolute;
+	left: calc(3ex - 1px);
+	top: 1.5em;
+	bottom: 0;
+	border-left: 1px solid rgba(255, 255, 255, .1);
+}
+
+.Pinto-dark .Pinto-dump-virtual span,
+.Pinto-dark .Pinto-dump-dynamic span,
+.Pinto-dark .Pinto-dump-string span {
+	color: rgba(255, 255, 255, 0.5);
+}
+
+.Pinto-dark .Pinto-dump-virtual i,
+.Pinto-dark .Pinto-dump-dynamic i,
+.Pinto-dark .Pinto-dump-string i {
+	font-size: 80%;
+	font-style: normal;
+	color: rgba(255, 255, 255, 0.5);
+	user-select: none;
+}
+
+.Pinto-dark .Pinto-dump-number {
+	color: #77d285;
+}
+
+.Pinto-dark .Pinto-dump-null,
+.Pinto-dark .Pinto-dump-bool {
+	color: #f3cb44;
+}
+
+.Pinto-dark .Pinto-dump-virtual {
+	font-style: italic;
+}
+
+.Pinto-dark .Pinto-dump-public::after {
+	content: ' pub';
+}
+
+.Pinto-dark .Pinto-dump-protected::after {
+	content: ' pro';
+}
+
+.Pinto-dark .Pinto-dump-private::after {
+	content: ' pri';
+}
+
+.Pinto-dark .Pinto-dump-public::after,
+.Pinto-dark .Pinto-dump-protected::after,
+.Pinto-dark .Pinto-dump-private::after,
+.Pinto-dark .Pinto-dump-hash {
+	font-size: 85%;
+	color: rgba(255, 255, 255, 0.35);
+}
+
+.Pinto-dark .Pinto-dump-indent {
+	display: none;
+}
+
+.Pinto-dark .Pinto-dump-highlight {
+	background: #C22;
+	color: white;
+	border-radius: 2px;
+	padding: 0 2px;
+	margin: 0 -2px;
+}
+
+span[data-Pinto-href] {
+	border-bottom: 1px dotted rgba(255, 255, 255, .2);
+}
+
+.Pinto-dark .Pinto-dump-flash {
+	animation: Pinto-dump-flash .2s ease;
+}
+
+@keyframes Pinto-dump-flash {
+	0% {
+		background: #c0c0c033;
+	}
+}

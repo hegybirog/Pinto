@@ -1,0 +1,422 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+html.Pinto-bs-visible,
+html.Pinto-bs-visible body {
+	display: block;
+	overflow: auto;
+}
+
+#Pinto-bs {
+	font: 9pt/1.5 Verdana, sans-serif;
+	background: white;
+	color: #333;
+	position: absolute;
+	z-index: 20000;
+	left: 0;
+	top: 0;
+	width: 100%;
+	text-align: left;
+}
+
+#Pinto-bs a {
+	text-decoration: none;
+	color: #328ADC;
+	padding: 0 4px;
+	margin: 0 -4px;
+}
+
+#Pinto-bs a + a {
+	margin-left: 0;
+}
+
+#Pinto-bs a:hover,
+#Pinto-bs a:focus {
+	color: #085AA3;
+}
+
+#Pinto-bs-toggle {
+	position: absolute;
+	right: .5em;
+	top: .5em;
+	text-decoration: none;
+	background: #CD1818;
+	color: white !important;
+	padding: 3px;
+}
+
+#Pinto-bs-toggle.Pinto-collapsed {
+	position: fixed;
+}
+
+.Pinto-bs-main {
+	display: flex;
+	flex-direction: column;
+	padding-bottom: 80vh;
+}
+
+.Pinto-bs-main.Pinto-collapsed {
+	display: none;
+}
+
+#Pinto-bs :where(:is(
+	h1, h2, h3, h4, h5, h6,
+	p,
+	ol, ul, dl,
+	pre, table, hr,
+	.Pinto-section-panel,
+	.Pinto-pane
+):not(:first-child)) {
+	margin-top: var(--Pinto-space);
+}
+
+#Pinto-bs h1 {
+	font-size: 15pt;
+	font-weight: normal;
+	text-shadow: 1px 1px 2px rgba(0, 0, 0, .3);
+}
+
+#Pinto-bs h1 span {
+	white-space: pre-wrap;
+}
+
+#Pinto-bs h2 {
+	font-size: 14pt;
+	font-weight: normal;
+}
+
+#Pinto-bs h3 {
+	font-size: 10pt;
+	font-weight: bold;
+}
+
+#Pinto-bs pre,
+#Pinto-bs code,
+#Pinto-bs table {
+	font: 9pt/1.5 Consolas, monospace !important;
+}
+
+#Pinto-bs pre,
+#Pinto-bs table {
+	background: #FDF5CE;
+	padding: .4em .7em;
+	border: 2px solid #ffffffa6;
+	box-shadow: 1px 2px 6px #00000005;
+	overflow: auto;
+}
+
+#Pinto-bs table pre {
+	padding: 0;
+	margin: 0;
+	border: none;
+	box-shadow: none;
+}
+
+#Pinto-bs table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+#Pinto-bs td,
+#Pinto-bs th {
+	vertical-align: top;
+	text-align: left;
+	padding: 2px 6px;
+	border: 1px solid #e6dfbf;
+}
+
+#Pinto-bs th {
+	font-weight: bold;
+}
+
+#Pinto-bs tr > :first-child {
+	width: 20%;
+}
+
+#Pinto-bs tr:nth-child(2n),
+#Pinto-bs tr:nth-child(2n) pre {
+	background-color: #F7F0CB;
+}
+
+#Pinto-bs .Pinto-footer--sticky {
+	position: fixed;
+	width: 100%;
+	bottom: 0;
+}
+
+#Pinto-bs footer ul {
+	font-size: 7pt;
+	padding: var(--Pinto-space);
+	margin: var(--Pinto-space) 0 0;
+	color: #777;
+	background: #F6F5F3;
+	border-top: 1px solid #DDD;
+	list-style: none;
+}
+
+#Pinto-bs .Pinto-footer-logo {
+	position: relative;
+}
+
+#Pinto-bs .Pinto-footer-logo a {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	width: 100px;
+	height: 50px;
+	background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAAAUBAMAAAD/1DctAAAAMFBMVEWupZzj39rEvbTy8O3X0sz9/PvGwLu8tavQysHq6OS0rKP5+Pbd2dT29fPMxbzPx8DKErMJAAAACXBIWXMAAAsTAAALEwEAmpwYAAACGUlEQVQoFX3TQWgTQRQA0MWLIJJDYehBTykhG5ERTx56K1u8eEhCYtomE7x5L4iLh0ViF7egewuFFqSIYE6hIHsIYQ6CQSg9CDKn4QsNCRlB59C74J/ZNHW1+An5+bOPyf6/s46oz2P+A0yIeZZ2ieEHi6TOnLKTxvWq+b52mxlVO3xnM1s7xLX1504XQH65OnW2dBqn7cCkYsFsfYsWpyY/2salmFTpEyzeR8zosYqMdiPDXdyU52K1wgEa/SjGpdEwUAxqvRfckQCDOyFearsEHe2grvkh/cFAHKvdtI3lcVceKQIOFpv+FOZaNPQBwJZLPp+hfrvT5JZXaUFsR8zqQc9qSgAharkfS5M/5F6nGJJAtXq/eLr3ucZpHccSxOOIPaQhtHohpCH2Xu6rLmQ0djnr4/+J3C6v+AW8/XWYxwYNdlhWj/P5fPSTQwVr0T9lGxdaBCqErNZaqYnEwbkjEB3NasGF3lPdrHa1nnxNOMgj0+neePUPjd2v/qVvUv29ifvc19huQ48qwXShy/9o8o3OSk0cs37mOFd0Ydgvsf/oZEnPVtggfd66lORn9mDyyzXU13SRtH2L6aR5T/snGAcZPfAXz5J1YlJWBEuxdMYqQecpBrlM49xAbmqyHA+xlA1FxBtqT2xmJoNXZlIt74ZBLeJ9ZGDqByNI7p543idzJ23vXEv7IgnsxiS+eNtwNbFdLq7+Bi4wQ0I4SVb9AAAAAElFTkSuQmCC') no-repeat;
+	opacity: .6;
+	padding: 0;
+	margin: 0;
+}
+
+#Pinto-bs .Pinto-footer-logo a:hover,
+#Pinto-bs .Pinto-footer-logo a:focus {
+	opacity: 1;
+	transition: opacity 0.1s;
+}
+
+
+#Pinto-bs .Pinto-section {
+	padding: var(--Pinto-space);
+}
+
+#Pinto-bs .Pinto-section-panel {
+	background: #5040200E;
+	padding: var(--Pinto-space);
+	border-radius: 8px;
+	box-shadow: inset 1px 1px 0px 0 #00000005;
+	overflow: hidden;
+}
+
+#Pinto-bs .outer, /* deprecated */
+#Pinto-bs .Pinto-pane {
+	overflow: auto;
+}
+
+#Pinto-bs.Pinto-mac .Pinto-pane {
+	padding-bottom: 12px;
+}
+
+
+/* header */
+#Pinto-bs .Pinto-section--error {
+	background: #CD1818;
+	color: white;
+}
+
+#Pinto-bs .Pinto-section--error p,
+#Pinto-bs .Pinto-section--error h1 {
+	font-size: 13pt;
+	color: white;
+}
+
+#Pinto-bs .Pinto-section--error::selection,
+#Pinto-bs .Pinto-section--error ::selection {
+	color: black !important;
+	background: #FDF5CE !important;
+}
+
+#Pinto-bs .Pinto-section--error h1 a {
+	color: #ffefa1 !important;
+}
+
+#Pinto-bs .Pinto-section--error span span {
+	font-size: 80%;
+	color: rgba(255, 255, 255, 0.5);
+	text-shadow: none;
+}
+
+#Pinto-bs .Pinto-section--error a.Pinto-action {
+	color: white !important;
+	opacity: 0;
+	font-size: .7em;
+	border-bottom: none !important;
+}
+
+#Pinto-bs .Pinto-section--error:hover a.Pinto-action {
+	opacity: .6;
+}
+
+#Pinto-bs .Pinto-section--error a.Pinto-action:hover {
+	opacity: 1;
+}
+
+#Pinto-bs .Pinto-section--error i {
+	color: #ffefa1;
+	font-style: normal;
+}
+
+#Pinto-bs .Pinto-section--error:has(.Pinto-caused) {
+	border-radius: 0 0 0 8px;
+	overflow: hidden;
+}
+
+#Pinto-bs .Pinto-caused {
+	margin: var(--Pinto-space) calc(-1 * var(--Pinto-space)) calc(-1 * var(--Pinto-space));
+	padding: .3em var(--Pinto-space);
+	background: #df8075;
+	white-space: nowrap;
+}
+
+#Pinto-bs .Pinto-caused a {
+	color: white;
+}
+
+
+
+/* source code */
+#Pinto-bs pre.Pinto-code > div {
+	min-width: 100%;
+	float: left;
+	white-space: pre;
+}
+
+#Pinto-bs .Pinto-code-comment {
+	color: rgba(0, 0, 0, 0.5);
+	font-style: italic;
+}
+
+#Pinto-bs .Pinto-code-keyword {
+	color: #D24;
+	font-weight: bold;
+}
+
+#Pinto-bs .Pinto-code-var {
+	font-weight: bold;
+}
+
+#Pinto-bs .Pinto-line-highlight {
+	background: #CD1818;
+	color: white;
+	font-weight: bold;
+	font-style: normal;
+	display: block;
+	padding: 0 1ch;
+	margin: 0 -1ch -1lh;
+}
+
+#Pinto-bs .Pinto-column-highlight {
+	display: inline-block;
+	backdrop-filter: grayscale(1);
+	margin: 0 -1px;
+	padding: 0 1px;
+}
+
+#Pinto-bs .Pinto-line {
+	color: #9F9C7F;
+	font-weight: normal;
+	font-style: normal;
+}
+
+#Pinto-bs a.Pinto-editor {
+	color: inherit;
+	border-bottom: 1px dotted rgba(0, 0, 0, .3);
+	border-radius: 3px;
+}
+
+#Pinto-bs a.Pinto-editor:hover {
+	background: #0001;
+}
+
+#Pinto-bs span[data-Pinto-href] {
+	border-bottom: 1px dotted rgba(0, 0, 0, .3);
+}
+
+#Pinto-bs .Pinto-dump-whitespace {
+	color: #0003;
+}
+
+#Pinto-bs .Pinto-callstack {
+	display: grid;
+	overflow: auto;
+	grid-template-columns: max-content 1fr;
+	row-gap: calc(.5 * var(--Pinto-space));
+}
+
+#Pinto-bs .Pinto-callstack-file {
+	text-align: right;
+	padding-right: var(--Pinto-space);
+	white-space: nowrap;
+}
+
+#Pinto-bs .Pinto-callstack-callee {
+	white-space: nowrap;
+}
+
+#Pinto-bs .Pinto-callstack-additional {
+	grid-column-start: 1;
+	grid-column-end: 3;
+}
+
+#Pinto-bs .Pinto-callstack-args tr:first-child > * {
+	position: relative;
+}
+
+#Pinto-bs .Pinto-callstack-args tr:first-child td:before {
+	position: absolute;
+	right: .3em;
+	content: 'may not be true';
+	opacity: .4;
+}
+
+#Pinto-bs .Pinto-panel-fadein {
+	animation: Pinto-panel-fadein .12s ease;
+}
+
+@keyframes Pinto-panel-fadein {
+	0% {
+		opacity: 0;
+	}
+}
+
+#Pinto-bs .Pinto-section--causedby {
+	flex-direction: column;
+	padding: 0;
+}
+
+#Pinto-bs .Pinto-section--causedby:not(.Pinto-collapsed) {
+	display: flex;
+}
+
+#Pinto-bs .Pinto-section--causedby .Pinto-section--error {
+	background: #cd1818a6;
+}
+
+#Pinto-bs .Pinto-section--error + .Pinto-section--stack {
+	margin-top: calc(1.5 * var(--Pinto-space));
+}
+
+
+/* tabs */
+#Pinto-bs .Pinto-tab-bar {
+	display: flex;
+	list-style: none;
+	padding-left: 0;
+	margin: 0;
+	width: 100%;
+	font-size: 110%;
+	column-gap: var(--Pinto-space);
+}
+
+#Pinto-bs .Pinto-tab-bar a {
+	display: block;
+	padding: calc(.5 * var(--Pinto-space)) var(--Pinto-space);
+	margin: 0;
+	height: 100%;
+	box-sizing: border-box;
+	border-radius: 5px 5px 0 0;
+	text-decoration: none;
+	transition: all 0.1s;
+}
+
+#Pinto-bs .Pinto-tab-bar > .Pinto-active a {
+	background: white;
+}
+
+#Pinto-bs .Pinto-tab-panel {
+	border-top: 2px solid white;
+	padding-top: var(--Pinto-space);
+	overflow: auto;
+}

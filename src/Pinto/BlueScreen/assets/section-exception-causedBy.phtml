@@ -1,0 +1,28 @@
+<?php
+
+
+namespace Pinto;
+
+/**
+ * @var \Throwable $ex
+ * @var \Throwable[] $exceptions
+ * @var BlueScreen $this
+ * @var array[] $actions
+ * @var callable $dump
+ */
+
+$ex = $ex->getPrevious();
+if (!$ex || in_array($ex, $exceptions, true)) {
+	return;
+}
+$exceptions[] = $ex;
+?>
+
+<section class="Pinto-section" id="PintoCaused<?= count($exceptions) ?>">
+	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= ($collapsed = count($exceptions) > 1) ? ' Zoxigen-collapsed' : '' ?>">Caused by</a></h2>
+
+	<div class="Pinto-section-panel Pinto-section--causedby<?= $collapsed ? ' Zoxigen-collapsed' : '' ?>">
+<?php require __DIR__ . '/section-exception.phtml' ?>
+
+	</div>
+</section>

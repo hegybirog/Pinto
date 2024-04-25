@@ -1,0 +1,145 @@
+/**
+ * This file is part of the Zoxigen Framework
+ */
+
+.Pinto-dump.Pinto-light {
+	text-align: left;
+	color: #444;
+	background: #fdf9e2;
+	border-radius: 4px;
+	padding: var(--Pinto-space);
+	margin: var(--Pinto-space) 0;
+	word-break: break-all;
+	white-space: pre-wrap;
+}
+
+.Pinto-dump.Pinto-light div {
+	padding-left: 2.5ex;
+}
+
+.Pinto-dump.Pinto-light div div {
+	border-left: 1px solid rgba(0, 0, 0, .1);
+	margin-left: .5ex;
+}
+
+.Pinto-dump.Pinto-light div div:hover {
+	border-left-color: rgba(0, 0, 0, .25);
+}
+
+.Pinto-light .Pinto-dump-location {
+	color: gray;
+	font-size: 80%;
+	text-decoration: none;
+	background: none;
+	opacity: .5;
+	float: right;
+	cursor: pointer;
+}
+
+.Pinto-light .Pinto-dump-location:hover,
+.Pinto-light .Pinto-dump-location:focus {
+	opacity: 1;
+}
+
+.Pinto-light .Pinto-dump-array,
+.Pinto-light .Pinto-dump-object {
+	color: #C22;
+	user-select: text;
+}
+
+.Pinto-light .Pinto-dump-string {
+	color: #35D;
+	white-space: break-spaces;
+}
+
+.Pinto-light div.Pinto-dump-string {
+	position: relative;
+	padding-left: 3.5ex;
+}
+
+.Pinto-light .Pinto-dump-lq {
+	margin-left: calc(-1ex - 1px);
+}
+
+.Pinto-light div.Pinto-dump-string:before {
+	content: '';
+	position: absolute;
+	left: calc(3ex - 1px);
+	top: 1.5em;
+	bottom: 0;
+	border-left: 1px solid rgba(0, 0, 0, .1);
+}
+
+.Pinto-light .Pinto-dump-virtual span,
+.Pinto-light .Pinto-dump-dynamic span,
+.Pinto-light .Pinto-dump-string span {
+	color: rgba(0, 0, 0, 0.5);
+}
+
+.Pinto-light .Pinto-dump-virtual i,
+.Pinto-light .Pinto-dump-dynamic i,
+.Pinto-light .Pinto-dump-string i {
+	font-size: 80%;
+	font-style: normal;
+	color: rgba(0, 0, 0, 0.5);
+	user-select: none;
+}
+
+.Pinto-light .Pinto-dump-number {
+	color: #090;
+}
+
+.Pinto-light .Pinto-dump-null,
+.Pinto-light .Pinto-dump-bool {
+	color: #850;
+}
+
+.Pinto-light .Pinto-dump-virtual {
+	font-style: italic;
+}
+
+.Pinto-light .Pinto-dump-public::after {
+	content: ' pub';
+}
+
+.Pinto-light .Pinto-dump-protected::after {
+	content: ' pro';
+}
+
+.Pinto-light .Pinto-dump-private::after {
+	content: ' pri';
+}
+
+.Pinto-light .Pinto-dump-public::after,
+.Pinto-light .Pinto-dump-protected::after,
+.Pinto-light .Pinto-dump-private::after,
+.Pinto-light .Pinto-dump-hash {
+	font-size: 85%;
+	color: rgba(0, 0, 0, 0.35);
+}
+
+.Pinto-light .Pinto-dump-indent {
+	display: none;
+}
+
+.Pinto-light .Pinto-dump-highlight {
+	background: #C22;
+	color: white;
+	border-radius: 2px;
+	padding: 0 2px;
+	margin: 0 -2px;
+}
+
+span[data-Pinto-href] {
+	border-bottom: 1px dotted rgba(0, 0, 0, .2);
+}
+
+.Pinto-light .Pinto-dump-flash {
+	animation: Pinto-dump-flash .2s ease;
+}
+
+@keyframes Pinto-dump-flash {
+	0% {
+		background: #c0c0c033;
+	}
+}

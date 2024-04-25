@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -48,12 +48,12 @@ final class DevelopmentStrategy
 		try {
 			$logFile = Debugger::log($exception, Debugger::EXCEPTION);
 		} catch (\Throwable $e) {
-			echo "$exception\nZoxigen is unable to log error: {$e->getMessage()}\n";
+			echo "$exception\nPinto is unable to log error: {$e->getMessage()}\n";
 			return;
 		}
 
 		if ($logFile && !headers_sent()) {
-			header("X-Zoxigen-Error-Log: $logFile", replace: false);
+			header("X-Pinto-Error-Log: $logFile", replace: false);
 		}
 
 		if (Helpers::detectColors() && @is_file($exception->getFile())) {
@@ -89,7 +89,7 @@ final class DevelopmentStrategy
 		}
 
 		$message = 'PHP ' . Helpers::errorTypeToString($severity) . ': ' . Helpers::improveError($message);
-		$count = &$this->bar->getPanel('Zoxigen:errors')->data["$file|$line|$message"];
+		$count = &$this->bar->getPanel('Pinto:errors')->data["$file|$line|$message"];
 
 		if (!$count++ && !Helpers::isHtmlMode() && !Helpers::isAjax()) {
 			echo "\n$message in $file on line $line\n";

@@ -5,8 +5,8 @@ require __DIR__ . '/../src/Pinto.php';
 
 use Pinto\Debugger;
 
-// For security reasons, Zoxigen is visible only on localhost.
-// You may force Zoxigen to run in development mode by passing the Debugger::Development instead of Debugger::Detect.
+// For security reasons, Pinto is visible only on localhost.
+// You may force Pinto to run in development mode by passing the Debugger::Development instead of Debugger::Detect.
 Debugger::enable(Debugger::Detect, __DIR__ . '/log');
 
 ?>
@@ -65,7 +65,7 @@ $arr = [
 	'single line' => 'hello',
 	'binary' => "binary\xA0string",
 	'multi line' => "first\r\nsecond\nthird\n   indented line",
-	'long' => str_repeat('Zoxigen ', 1000), // affected by Zoxigen\Debugger::$maxLength
+	'long' => str_repeat('Pinto ', 1000), // affected by Pinto\Debugger::$maxLength
 ];
 
 dump($arr);
@@ -95,5 +95,5 @@ dump($arr);
 
 
 if (Debugger::$productionMode) {
-	echo '<p><b>For security reasons, Zoxigen is visible only on localhost. Look into the source code to see how to enable Zoxigen.</b></p>';
+	echo '<p><b>For security reasons, Pinto is visible only on localhost. Look into the source code to see how to enable Pinto.</b></p>';
 }

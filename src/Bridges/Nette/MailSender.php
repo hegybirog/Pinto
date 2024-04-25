@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -13,7 +13,7 @@ use Pinto;
 
 
 /**
- * Zoxigen logger bridge for Nette Mail.
+ * Pinto logger bridge for Nette Mail.
  */
 class MailSender
 {
@@ -41,7 +41,7 @@ class MailSender
 		$host = preg_replace('#[^\w.-]+#', '', $this->host ?? $_SERVER['SERVER_NAME'] ?? php_uname('n'));
 
 		$mail = new Nette\Mail\Message;
-		$mail->setHeader('X-Mailer', 'Zoxigen');
+		$mail->setHeader('X-Mailer', 'Pinto');
 		if ($this->fromEmail || Nette\Utils\Validators::isEmail("noreply@$host")) {
 			$mail->setFrom($this->fromEmail ?: "noreply@$host");
 		}

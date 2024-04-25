@@ -5,8 +5,8 @@ require __DIR__ . '/../src/Pinto.php';
 
 use Pinto\Debugger;
 
-// For security reasons, Zoxigen is visible only on localhost.
-// You may force Zoxigen to run in development mode by passing the Debugger::Development instead of Debugger::Detect.
+// For security reasons, Pinto is visible only on localhost.
+// You may force Pinto to run in development mode by passing the Debugger::Development instead of Debugger::Detect.
 Debugger::enable(Debugger::Detect, __DIR__ . '/log');
 
 
@@ -58,7 +58,7 @@ document.querySelectorAll('button').forEach((button) => {
 				headers: {
 					'Content-Type': 'application/json',
 					'X-Requested-With': 'XMLHttpRequest',
-					//'X-Zoxigen-Ajax': Zoxigen.getAjaxHeader(), // use when auto-refresh is disabled via window.PintoAutoRefresh = false;
+					//'X-Pinto-Ajax': Pinto.getAjaxHeader(), // use when auto-refresh is disabled via window.PintoAutoRefresh = false;
 				}
 			}
 		)
@@ -74,5 +74,5 @@ document.querySelectorAll('button').forEach((button) => {
 <?php
 
 if (Debugger::$productionMode) {
-	echo '<p><b>For security reasons, Zoxigen is visible only on localhost. Look into the source code to see how to enable Zoxigen.</b></p>';
+	echo '<p><b>For security reasons, Pinto is visible only on localhost. Look into the source code to see how to enable Pinto.</b></p>';
 }

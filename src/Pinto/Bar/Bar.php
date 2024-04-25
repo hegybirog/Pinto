@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -55,7 +55,7 @@ class Bar
 	public function renderLoader(DeferredContent $defer): void
 	{
 		if (!$defer->isAvailable()) {
-			throw new \LogicException('Start session before Zoxigen is enabled.');
+			throw new \LogicException('Start session before Pinto is enabled.');
 		}
 
 		$this->loaderRendered = true;
@@ -76,7 +76,7 @@ class Bar
 
 		if (Helpers::isAjax()) {
 			if ($defer->isAvailable()) {
-				$defer->addSetup('Zoxigen.Debug.loadAjax', $this->renderPartial('ajax', '-ajax:' . $requestId));
+				$defer->addSetup('Pinto.Debug.loadAjax', $this->renderPartial('ajax', '-ajax:' . $requestId));
 			}
 		} elseif (Helpers::isRedirect()) {
 			if ($defer->isAvailable()) {
@@ -84,7 +84,7 @@ class Bar
 			}
 		} elseif (Helpers::isHtmlMode()) {
 			if (preg_match('#^Content-Length:#im', implode("\n", headers_list()))) {
-				Debugger::log(new \LogicException('Zoxigen cannot display the Bar because the Content-Length header is being sent'), Debugger::EXCEPTION);
+				Debugger::log(new \LogicException('Pinto cannot display the Bar because the Content-Length header is being sent'), Debugger::EXCEPTION);
 			}
 
 			$content = $this->renderPartial('main');
@@ -96,10 +96,10 @@ class Bar
 
 			$redirectQueue = null;
 
-			$content = '<div id=Zoxigen-debug-bar>' . $content['bar'] . '</div>' . $content['panels'];
+			$content = '<div id=Pinto-debug-bar>' . $content['bar'] . '</div>' . $content['panels'];
 
 			if ($this->loaderRendered) {
-				$defer->addSetup('Zoxigen.Debug.init', $content);
+				$defer->addSetup('Pinto.Debug.init', $content);
 
 			} else {
 				$nonce = Helpers::getNonce();
@@ -150,7 +150,7 @@ class Bar
 
 				$idHtml = "error-$idHtml";
 				$tab = "Error in $id";
-				$panelHtml = "<h1>Error: $id</h1><div class='Zoxigen-inner'>" . nl2br(Helpers::escapeHtml($e)) . '</div>';
+				$panelHtml = "<h1>Error: $id</h1><div class='Pinto-inner'>" . nl2br(Helpers::escapeHtml($e)) . '</div>';
 				unset($e);
 			}
 

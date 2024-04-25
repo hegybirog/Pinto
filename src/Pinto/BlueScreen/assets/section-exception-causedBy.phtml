@@ -19,9 +19,9 @@ $exceptions[] = $ex;
 ?>
 
 <section class="Pinto-section" id="PintoCaused<?= count($exceptions) ?>">
-	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= ($collapsed = count($exceptions) > 1) ? ' Zoxigen-collapsed' : '' ?>">Caused by</a></h2>
+	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= ($collapsed = count($exceptions) > 1) ? ' Pinto-collapsed' : '' ?>">Caused by</a></h2>
 
-	<div class="Pinto-section-panel Pinto-section--causedby<?= $collapsed ? ' Zoxigen-collapsed' : '' ?>">
+	<div class="Pinto-section-panel Pinto-section--causedby<?= $collapsed ? ' Pinto-collapsed' : '' ?>">
 <?php require __DIR__ . '/section-exception.phtml' ?>
 
 	</div>

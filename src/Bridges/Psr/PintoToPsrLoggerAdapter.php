@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -13,11 +13,11 @@ use Pinto;
 
 
 /**
- * Zoxigen\ILogger to Psr\Log\LoggerInterface adapter.
+ * Pinto\ILogger to Psr\Log\LoggerInterface adapter.
  */
 class PintoToPsrLoggerAdapter extends Psr\Log\AbstractLogger
 {
-	/** PSR-3 log level to Zoxigen logger level mapping */
+	/** PSR-3 log level to Pinto logger level mapping */
 	private const LevelMap = [
 		Psr\Log\LogLevel::EMERGENCY => Pinto\ILogger::CRITICAL,
 		Psr\Log\LogLevel::ALERT => Pinto\ILogger::CRITICAL,

@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -60,7 +60,7 @@ final class DeferredContent
 		if (headers_sent($file, $line) || ob_get_length()) {
 			throw new \LogicException(
 				__METHOD__ . '() called after some output has been sent. '
-				. ($file ? "Output started at $file:$line." : 'Try Zoxigen\OutputDebugger to find where output started.'),
+				. ($file ? "Output started at $file:$line." : 'Try Pinto\OutputDebugger to find where output started.'),
 			);
 		}
 
@@ -100,7 +100,7 @@ final class DeferredContent
 		}
 
 		if (Helpers::isAjax()) {
-			header('X-Zoxigen-Ajax: 1'); // session must be already locked
+			header('X-Pinto-Ajax: 1'); // session must be already locked
 		}
 
 		return false;
@@ -134,7 +134,7 @@ final class DeferredContent
 (function(){
 	var el = document.createElement('style');
 	el.setAttribute('nonce', document.currentScript.getAttribute('nonce') || document.currentScript.nonce);
-	el.className='Zoxigen-debug';
+	el.className='Pinto-debug';
 	el.textContent=" . json_encode(Helpers::minifyCss(implode('', $css))) . ";
 	document.head.appendChild(el);})
 ();\n" . implode('', $js1) . implode('', $js2);

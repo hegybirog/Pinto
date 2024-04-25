@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -69,7 +69,7 @@ final class Renderer
 			[$file, $line, $code] = $model->location;
 			$uri = Helpers::editorUri($file, $line);
 			$location = Helpers::formatHtml(
-				'<a href="%" class="Zoxigen-dump-location" title="in file % on line %%">',
+				'<a href="%" class="Pinto-dump-location" title="in file % on line %%">',
 				$uri ?? '#',
 				$file,
 				$line,
@@ -77,10 +77,10 @@ final class Renderer
 			) . Helpers::encodeString($code, 50) . " 📍</a\n>";
 		}
 
-		return '<pre class="Zoxigen-dump' . ($this->theme ? ' Zoxigen-' . htmlspecialchars($this->theme) : '')
-				. ($json && $this->collapseTop === true ? ' Zoxigen-collapsed' : '') . '"'
-				. ($snapshot !== null ? " data-Zoxigen-snapshot='" . self::jsonEncode($snapshot) . "'" : '')
-				. ($json ? " data-Zoxigen-dump='" . self::jsonEncode($json) . "'" : '')
+		return '<pre class="Pinto-dump' . ($this->theme ? ' Pinto-' . htmlspecialchars($this->theme) : '')
+				. ($json && $this->collapseTop === true ? ' Pinto-collapsed' : '') . '"'
+				. ($snapshot !== null ? " data-Pinto-snapshot='" . self::jsonEncode($snapshot) . "'" : '')
+				. ($json ? " data-Pinto-dump='" . self::jsonEncode($json) . "'" : '')
 				. ($location || strlen($html) > 100 ? "\n" : '')
 			. '>'
 			. $location
@@ -114,16 +114,16 @@ final class Renderer
 	private function renderVar(mixed $value, int $depth = 0, string|int|null $keyType = null): string
 	{
 		return match (true) {
-			$value === null => '<span class="Zoxigen-dump-null">null</span>',
-			is_bool($value) => '<span class="Zoxigen-dump-bool">' . ($value ? 'true' : 'false') . '</span>',
-			is_int($value) => '<span class="Zoxigen-dump-number">' . $value . '</span>',
-			is_float($value) => '<span class="Zoxigen-dump-number">' . self::jsonEncode($value) . '</span>',
+			$value === null => '<span class="Pinto-dump-null">null</span>',
+			is_bool($value) => '<span class="Pinto-dump-bool">' . ($value ? 'true' : 'false') . '</span>',
+			is_int($value) => '<span class="Pinto-dump-number">' . $value . '</span>',
+			is_float($value) => '<span class="Pinto-dump-number">' . self::jsonEncode($value) . '</span>',
 			is_string($value) => $this->renderString($value, $depth, $keyType),
 			is_array($value), $value->type === Value::TypeArray => $this->renderArray($value, $depth),
 			$value->type === Value::TypeRef => $this->renderVar($this->snapshot[$value->value], $depth, $keyType),
 			$value->type === Value::TypeObject => $this->renderObject($value, $depth),
-			$value->type === Value::TypeNumber => '<span class="Zoxigen-dump-number">' . Helpers::escapeHtml($value->value) . '</span>',
-			$value->type === Value::TypeText => '<span class="Zoxigen-dump-virtual">' . Helpers::escapeHtml($value->value) . '</span>',
+			$value->type === Value::TypeNumber => '<span class="Pinto-dump-number">' . Helpers::escapeHtml($value->value) . '</span>',
+			$value->type === Value::TypeText => '<span class="Pinto-dump-virtual">' . Helpers::escapeHtml($value->value) . '</span>',
 			$value->type === Value::TypeStringHtml, $value->type === Value::TypeBinaryHtml => $this->renderString($value, $depth, $keyType),
 			$value->type === Value::TypeResource => $this->renderResource($value, $depth),
 			default => throw new \Exception('Unknown type'),
@@ -134,34 +134,34 @@ final class Renderer
 	private function renderString(string|Value $str, int $depth, string|int|null $keyType): string
 	{
 		if ($keyType === self::TypeArrayKey) {
-			$indent = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth - 1) . ' </span>';
-			return '<span class="Zoxigen-dump-string">'
-				. "<span class='Zoxigen-dump-lq'>'</span>"
+			$indent = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth - 1) . ' </span>';
+			return '<span class="Pinto-dump-string">'
+				. "<span class='Pinto-dump-lq'>'</span>"
 				. (is_string($str) ? Helpers::escapeHtml($str) : str_replace("\n", "\n" . $indent, $str->value))
 				. "<span>'</span>"
 				. '</span>';
 
 		} elseif ($keyType !== null) {
 			$classes = [
-				Value::PropertyPublic => 'Zoxigen-dump-public',
-				Value::PropertyProtected => 'Zoxigen-dump-protected',
-				Value::PropertyDynamic => 'Zoxigen-dump-dynamic',
-				Value::PropertyVirtual => 'Zoxigen-dump-virtual',
+				Value::PropertyPublic => 'Pinto-dump-public',
+				Value::PropertyProtected => 'Pinto-dump-protected',
+				Value::PropertyDynamic => 'Pinto-dump-dynamic',
+				Value::PropertyVirtual => 'Pinto-dump-virtual',
 			];
-			$indent = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth - 1) . ' </span>';
+			$indent = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth - 1) . ' </span>';
 			$title = is_string($keyType)
 				? ' title="declared in ' . Helpers::escapeHtml($keyType) . '"'
 				: null;
 			return '<span class="'
-				. ($title ? 'Zoxigen-dump-private' : $classes[$keyType]) . '"' . $title . '>'
+				. ($title ? 'Pinto-dump-private' : $classes[$keyType]) . '"' . $title . '>'
 				. (is_string($str)
 					? Helpers::escapeHtml($str)
-					: "<span class='Zoxigen-dump-lq'>'</span>" . str_replace("\n", "\n" . $indent, $str->value) . "<span>'</span>")
+					: "<span class='Pinto-dump-lq'>'</span>" . str_replace("\n", "\n" . $indent, $str->value) . "<span>'</span>")
 				. '</span>';
 
 		} elseif (is_string($str)) {
 			$len = Helpers::utf8Length($str);
-			return '<span class="Zoxigen-dump-string"'
+			return '<span class="Pinto-dump-string"'
 				. ($len > 1 ? ' title="' . $len . ' characters"' : '')
 				. '>'
 				. "<span>'</span>"
@@ -174,26 +174,26 @@ final class Renderer
 			$count = substr_count($str->value, "\n");
 			if ($count) {
 				$collapsed = $indent1 = $toggle = null;
-				$indent = '<span class="Zoxigen-dump-indent"> </span>';
+				$indent = '<span class="Pinto-dump-indent"> </span>';
 				if ($depth) {
 					$collapsed = $count >= $this->collapseSub;
-					$indent1 = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
-					$indent = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth) . ' </span>';
-					$toggle = '<span class="Zoxigen-toggle' . ($collapsed ? ' Zoxigen-collapsed' : '') . '">string</span>' . "\n";
+					$indent1 = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
+					$indent = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth) . ' </span>';
+					$toggle = '<span class="Pinto-toggle' . ($collapsed ? ' Pinto-collapsed' : '') . '">string</span>' . "\n";
 				}
 
 				return $toggle
-					. '<div class="Zoxigen-dump-string' . ($collapsed ? ' Zoxigen-collapsed' : '')
+					. '<div class="Pinto-dump-string' . ($collapsed ? ' Pinto-collapsed' : '')
 					. '" title="' . $str->length . ' ' . $unit . '">'
 					. $indent1
-					. '<span' . ($count ? ' class="Zoxigen-dump-lq"' : '') . ">'</span>"
+					. '<span' . ($count ? ' class="Pinto-dump-lq"' : '') . ">'</span>"
 					. str_replace("\n", "\n" . $indent, $str->value)
 					. "<span>'</span>"
 					. ($depth ? "\n" : '')
 					. '</div>';
 			}
 
-			return '<span class="Zoxigen-dump-string"'
+			return '<span class="Pinto-dump-string"'
 				. ($str->length > 1 ? " title=\"{$str->length} $unit\"" : '')
 				. '>'
 				. "<span>'</span>"
@@ -206,7 +206,7 @@ final class Renderer
 
 	private function renderArray(array|Value $array, int $depth): string
 	{
-		$out = '<span class="Zoxigen-dump-array">array</span> (';
+		$out = '<span class="Pinto-dump-array">array</span> (';
 
 		if (is_array($array)) {
 			$items = $array;
@@ -225,7 +225,7 @@ final class Renderer
 				if ($this->lazy !== false) {
 					$ref = new Value(Value::TypeRef, $array->id);
 					$this->copySnapshot($ref);
-					return '<span class="Zoxigen-toggle Zoxigen-collapsed" data-Zoxigen-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
+					return '<span class="Pinto-toggle Pinto-collapsed" data-Pinto-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
 
 				} elseif ($this->hash) {
 					return $out . (isset($this->above[$array->id]) ? ' <i>see above</i>' : ' <i>see below</i>');
@@ -241,16 +241,16 @@ final class Renderer
 			? ($this->lazy === false || $depth === 1 ? $count >= $this->collapseSub : true)
 			: (is_int($this->collapseTop) ? $count >= $this->collapseTop : $this->collapseTop);
 
-		$span = '<span class="Zoxigen-toggle' . ($collapsed ? ' Zoxigen-collapsed' : '') . '"';
+		$span = '<span class="Pinto-toggle' . ($collapsed ? ' Pinto-collapsed' : '') . '"';
 
 		if ($collapsed && $this->lazy !== false) {
 			$array = isset($array->id) ? new Value(Value::TypeRef, $array->id) : $array;
 			$this->copySnapshot($array);
-			return $span . " data-Zoxigen-dump='" . self::jsonEncode($array) . "'>" . $out . '</span>';
+			return $span . " data-Pinto-dump='" . self::jsonEncode($array) . "'>" . $out . '</span>';
 		}
 
-		$out = $span . '>' . $out . "</span>\n" . '<div' . ($collapsed ? ' class="Zoxigen-collapsed"' : '') . '>';
-		$indent = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
+		$out = $span . '>' . $out . "</span>\n" . '<div' . ($collapsed ? ' class="Pinto-collapsed"' : '') . '>';
+		$indent = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
 		$this->parents[$array->id ?? null] = $this->above[$array->id ?? null] = true;
 
 		foreach ($items as $info) {
@@ -258,7 +258,7 @@ final class Renderer
 			$out .= $indent
 				. $this->renderVar($k, $depth + 1, self::TypeArrayKey)
 				. ' => '
-				. ($ref && $this->hash ? '<span class="Zoxigen-dump-hash">&' . $ref . '</span> ' : '')
+				. ($ref && $this->hash ? '<span class="Pinto-dump-hash">&' . $ref . '</span> ' : '')
 				. ($tmp = $this->renderVar($v, $depth + 1))
 				. (substr($tmp, -6) === '</div>' ? '' : "\n");
 		}
@@ -277,7 +277,7 @@ final class Renderer
 		$editorAttributes = '';
 		if ($this->classLocation && $object->editor) {
 			$editorAttributes = Helpers::formatHtml(
-				' title="Declared in file % on line %%%" data-Zoxigen-href="%"',
+				' title="Declared in file % on line %%%" data-Pinto-href="%"',
 				$object->editor->file,
 				$object->editor->line,
 				$object->editor->url ? "\nCtrl-Click to open in editor" : '',
@@ -287,12 +287,12 @@ final class Renderer
 		}
 
 		$pos = strrpos($object->value, '\\');
-		$out = '<span class="Zoxigen-dump-object"' . $editorAttributes . '>'
+		$out = '<span class="Pinto-dump-object"' . $editorAttributes . '>'
 			. ($pos
 				? Helpers::escapeHtml(substr($object->value, 0, $pos + 1)) . '<b>' . Helpers::escapeHtml(substr($object->value, $pos + 1)) . '</b>'
 				: Helpers::escapeHtml($object->value))
 			. '</span>'
-			. ($object->id && $this->hash ? ' <span class="Zoxigen-dump-hash">#' . $object->id . '</span>' : '');
+			. ($object->id && $this->hash ? ' <span class="Pinto-dump-hash">#' . $object->id . '</span>' : '');
 
 		if ($object->items === null) {
 			return $out . ' …';
@@ -307,7 +307,7 @@ final class Renderer
 			if ($this->lazy !== false) {
 				$ref = new Value(Value::TypeRef, $object->id);
 				$this->copySnapshot($ref);
-				return '<span class="Zoxigen-toggle Zoxigen-collapsed" data-Zoxigen-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
+				return '<span class="Pinto-toggle Pinto-collapsed" data-Pinto-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
 
 			} elseif ($this->hash) {
 				return $out . (isset($this->above[$object->id]) ? ' <i>see above</i>' : ' <i>see below</i>');
@@ -318,16 +318,16 @@ final class Renderer
 			? ($this->lazy === false || $depth === 1 ? count($object->items) >= $this->collapseSub : true)
 			: (is_int($this->collapseTop) ? count($object->items) >= $this->collapseTop : $this->collapseTop));
 
-		$span = '<span class="Zoxigen-toggle' . ($collapsed ? ' Zoxigen-collapsed' : '') . '"';
+		$span = '<span class="Pinto-toggle' . ($collapsed ? ' Pinto-collapsed' : '') . '"';
 
 		if ($collapsed && $this->lazy !== false) {
 			$value = $object->id ? new Value(Value::TypeRef, $object->id) : $object;
 			$this->copySnapshot($value);
-			return $span . " data-Zoxigen-dump='" . self::jsonEncode($value) . "'>" . $out . '</span>';
+			return $span . " data-Pinto-dump='" . self::jsonEncode($value) . "'>" . $out . '</span>';
 		}
 
-		$out = $span . '>' . $out . "</span>\n" . '<div' . ($collapsed ? ' class="Zoxigen-collapsed"' : '') . '>';
-		$indent = '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
+		$out = $span . '>' . $out . "</span>\n" . '<div' . ($collapsed ? ' class="Pinto-collapsed"' : '') . '>';
+		$indent = '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>';
 		$this->parents[$object->id] = $this->above[$object->id] = true;
 
 		foreach ($object->items as $info) {
@@ -335,7 +335,7 @@ final class Renderer
 			$out .= $indent
 				. $this->renderVar($k, $depth + 1, $type)
 				. ': '
-				. ($ref && $this->hash ? '<span class="Zoxigen-dump-hash">&' . $ref . '</span> ' : '')
+				. ($ref && $this->hash ? '<span class="Pinto-dump-hash">&' . $ref . '</span> ' : '')
 				. ($tmp = $this->renderVar($v, $depth + 1))
 				. (substr($tmp, -6) === '</div>' ? '' : "\n");
 		}
@@ -351,8 +351,8 @@ final class Renderer
 
 	private function renderResource(Value $resource, int $depth): string
 	{
-		$out = '<span class="Zoxigen-dump-resource">' . Helpers::escapeHtml($resource->value) . '</span> '
-			. ($this->hash ? '<span class="Zoxigen-dump-hash">@' . substr($resource->id, 1) . '</span>' : '');
+		$out = '<span class="Pinto-dump-resource">' . Helpers::escapeHtml($resource->value) . '</span> '
+			. ($this->hash ? '<span class="Pinto-dump-hash">@' . substr($resource->id, 1) . '</span>' : '');
 
 		if (!$resource->items) {
 			return $out;
@@ -361,16 +361,16 @@ final class Renderer
 			if ($this->lazy !== false) {
 				$ref = new Value(Value::TypeRef, $resource->id);
 				$this->copySnapshot($ref);
-				return '<span class="Zoxigen-toggle Zoxigen-collapsed" data-Zoxigen-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
+				return '<span class="Pinto-toggle Pinto-collapsed" data-Pinto-dump=\'' . json_encode($ref) . "'>" . $out . '</span>';
 			}
 
 			return $out . ' <i>see above</i>';
 
 		} else {
 			$this->above[$resource->id] = true;
-			$out = "<span class=\"Zoxigen-toggle Zoxigen-collapsed\">$out</span>\n<div class=\"Zoxigen-collapsed\">";
+			$out = "<span class=\"Pinto-toggle Pinto-collapsed\">$out</span>\n<div class=\"Pinto-collapsed\">";
 			foreach ($resource->items as [$k, $v]) {
-				$out .= '<span class="Zoxigen-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>'
+				$out .= '<span class="Pinto-dump-indent">   ' . str_repeat('|  ', $depth) . '</span>'
 					. $this->renderVar($k, $depth + 1, Value::PropertyVirtual)
 					. ': '
 					. ($tmp = $this->renderVar($v, $depth + 1))

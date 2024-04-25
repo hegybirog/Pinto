@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -51,14 +51,14 @@ final class CodeHighlighter
 				if ($column) {
 					$s = preg_replace(
 						'#((?:&.*?;|[^&]){' . ($column - 1) . '})(&.*?;|.)#u',
-						'\1<span class="Zoxigen-column-highlight">\2</span>',
+						'\1<span class="Pinto-column-highlight">\2</span>',
 						$s . ' ',
 						1,
 					);
 				}
-				$out .= sprintf("<span class='Zoxigen-line-highlight'>%{$numWidth}s:    %s</span>\n%s", $n, $s, implode('', $openTags));
+				$out .= sprintf("<span class='Pinto-line-highlight'>%{$numWidth}s:    %s</span>\n%s", $n, $s, implode('', $openTags));
 			} else {
-				$out .= sprintf("<span class='Zoxigen-line'>%{$numWidth}s:</span>    %s\n", $n, $lines[$n]);
+				$out .= sprintf("<span class='Pinto-line'>%{$numWidth}s:</span>    %s\n", $n, $lines[$n]);
 			}
 		}
 
@@ -74,7 +74,7 @@ final class CodeHighlighter
 	{
 		$html = self::highlightPhpCode($code);
 		$html = self::highlightLine($html, $line, $column);
-		return "<pre class='Zoxigen-code'><div><code>$html</code></div></pre>";
+		return "<pre class='Pinto-code'><div><code>$html</code></div></pre>";
 	}
 
 
@@ -88,14 +88,14 @@ final class CodeHighlighter
 		$last = $out = '';
 		foreach (\PhpToken::tokenize($code) as $token) {
 			$next = match ($token->id) {
-				T_COMMENT, T_DOC_COMMENT, T_INLINE_HTML => 'Zoxigen-code-comment',
+				T_COMMENT, T_DOC_COMMENT, T_INLINE_HTML => 'Pinto-code-comment',
 				T_OPEN_TAG, T_OPEN_TAG_WITH_ECHO, T_CLOSE_TAG, T_LINE, T_FILE, T_DIR, T_TRAIT_C, T_METHOD_C, T_FUNC_C, T_NS_C, T_CLASS_C,
 				T_STRING, T_NAME_FULLY_QUALIFIED, T_NAME_QUALIFIED, T_NAME_RELATIVE => '',
-				T_LNUMBER, T_DNUMBER => 'Zoxigen-dump-number',
-				T_VARIABLE => 'Zoxigen-code-var',
-				T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING => 'Zoxigen-dump-string',
+				T_LNUMBER, T_DNUMBER => 'Pinto-dump-number',
+				T_VARIABLE => 'Pinto-code-var',
+				T_ENCAPSED_AND_WHITESPACE, T_CONSTANT_ENCAPSED_STRING => 'Pinto-dump-string',
 				T_WHITESPACE => $last,
-				default => 'Zoxigen-code-keyword',
+				default => 'Pinto-code-keyword',
 			};
 
 			if ($last !== $next) {

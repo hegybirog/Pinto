@@ -1,14 +1,14 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
 if (!function_exists('dump')) {
 	/**
-	 * Zoxigen\Debugger::dump() shortcut.
+	 * Pinto\Debugger::dump() shortcut.
 	 * @PintoSkipLocation
 	 */
 	function dump(mixed $var): mixed
@@ -20,7 +20,7 @@ if (!function_exists('dump')) {
 
 if (!function_exists('dumpe')) {
 	/**
-	 * Zoxigen\Debugger::dump() & exit shortcut.
+	 * Pinto\Debugger::dump() & exit shortcut.
 	 * @PintoSkipLocation
 	 */
 	function dumpe(mixed $var): void
@@ -34,7 +34,7 @@ if (!function_exists('dumpe')) {
 
 if (!function_exists('bdump')) {
 	/**
-	 * Zoxigen\Debugger::barDump() shortcut.
+	 * Pinto\Debugger::barDump() shortcut.
 	 * @PintoSkipLocation
 	 */
 	function bdump(mixed $var): mixed

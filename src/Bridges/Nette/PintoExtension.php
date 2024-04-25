@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -15,7 +15,7 @@ use Pinto;
 
 
 /**
- * Zoxigen extension for Nette DI.
+ * Pinto extension for Nette DI.
  */
 class PintoExtension extends Nette\DI\CompilerExtension
 {
@@ -78,7 +78,7 @@ class PintoExtension extends Nette\DI\CompilerExtension
 	public function afterCompile(Nette\PhpGenerator\ClassType $class): void
 	{
 		$initialize = $this->initialization ?? new Nette\PhpGenerator\Closure;
-		$initialize->addBody('if (!Zoxigen\Debugger::isEnabled()) { return; }');
+		$initialize->addBody('if (!Pinto\Debugger::isEnabled()) { return; }');
 
 		$builder = $this->getContainerBuilder();
 
@@ -88,7 +88,7 @@ class PintoExtension extends Nette\DI\CompilerExtension
 			!$logger instanceof Nette\DI\Definitions\ServiceDefinition
 			|| $logger->getFactory()->getEntity() !== [Pinto\Debugger::class, 'getLogger']
 		) {
-			$initialize->addBody('Zoxigen\Debugger::setLogger($logger);');
+			$initialize->addBody('Pinto\Debugger::setLogger($logger);');
 		}
 
 		$options = (array) $this->config;
@@ -103,12 +103,12 @@ class PintoExtension extends Nette\DI\CompilerExtension
 		foreach ($options as $key => $value) {
 			if ($value !== null) {
 				$tbl = [
-					'keysToHide' => 'array_push(Zoxigen\Debugger::getBlueScreen()->keysToHide, ... ?)',
-					'fromEmail' => 'if ($logger instanceof Zoxigen\Logger) $logger->fromEmail = ?',
-					'emailSnooze' => 'if ($logger instanceof Zoxigen\Logger) $logger->emailSnooze = ?',
+					'keysToHide' => 'array_push(Pinto\Debugger::getBlueScreen()->keysToHide, ... ?)',
+					'fromEmail' => 'if ($logger instanceof Pinto\Logger) $logger->fromEmail = ?',
+					'emailSnooze' => 'if ($logger instanceof Pinto\Logger) $logger->emailSnooze = ?',
 				];
 				$initialize->addBody($builder->formatPhp(
-					($tbl[$key] ?? 'Zoxigen\Debugger::$' . $key . ' = ?') . ';',
+					($tbl[$key] ?? 'Pinto\Debugger::$' . $key . ' = ?') . ';',
 					Nette\DI\Helpers::filterArguments([$value]),
 				));
 			}
@@ -121,7 +121,7 @@ class PintoExtension extends Nette\DI\CompilerExtension
 				$params['host'] = new Statement('$this->getByType(?, false)\?->getUrl()->getHost()', [Nette\Http\Request::class]);
 			}
 
-			$initialize->addBody($builder->formatPhp('if ($logger instanceof Zoxigen\Logger) $logger->mailer = ?;', [
+			$initialize->addBody($builder->formatPhp('if ($logger instanceof Pinto\Logger) $logger->mailer = ?;', [
 				[new Statement(Pinto\Bridges\Nette\MailSender::class, $params), 'send'],
 			]));
 		}
@@ -146,7 +146,7 @@ class PintoExtension extends Nette\DI\CompilerExtension
 				&& ($name = $builder->getByType(Nette\Http\Session::class))
 			) {
 				$initialize->addBody('$this->getService(?)->start();', [$name]);
-				$initialize->addBody('Zoxigen\Debugger::dispatch();');
+				$initialize->addBody('Pinto\Debugger::dispatch();');
 			}
 		}
 

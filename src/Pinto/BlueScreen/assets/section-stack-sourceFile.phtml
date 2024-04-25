@@ -14,23 +14,23 @@ $sourceMapped = $sourceOriginal ? Debugger::mapSource($file, $line) : null;
 ?>
 
 <section class="Pinto-section">
-	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= ($collapsed = $expanded !== null) ? ' Zoxigen-collapsed' : '' ?>">Source file</a></h2>
+	<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= ($collapsed = $expanded !== null) ? ' Pinto-collapsed' : '' ?>">Source file</a></h2>
 
-	<div class="Pinto-section-panel<?= $collapsed ? ' Zoxigen-collapsed' : '' ?>">
+	<div class="Pinto-section-panel<?= $collapsed ? ' Pinto-collapsed' : '' ?>">
 <?php if ($sourceOriginal && $sourceMapped): ?>
 		<div class="Pinto-tabs">
 			<ul class="Pinto-tab-bar">
-				<li class="Pinto-tab-label<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>"><a href="#">PHP</a></li>
-				<li class="Pinto-tab-label<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>"><a href="#"><?= Helpers::escapeHtml($sourceMapped['label']) ?></a></li>
+				<li class="Pinto-tab-label<?= $sourceMapped['active'] ? '' : ' Pinto-active' ?>"><a href="#">PHP</a></li>
+				<li class="Pinto-tab-label<?= $sourceMapped['active'] ? ' Pinto-active' : '' ?>"><a href="#"><?= Helpers::escapeHtml($sourceMapped['label']) ?></a></li>
 			</ul>
 
 			<div>
-				<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>">
+				<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? '' : ' Pinto-active' ?>">
 					<p><b>File:</b> <?= Helpers::editorLink(...$sourceOriginal) ?></p>
 					<?= BlueScreen::highlightFile(...$sourceOriginal) ?>
 				</div>
 
-				<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>">
+				<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? ' Pinto-active' : '' ?>">
 					<p><b>File:</b> <?= Helpers::editorLink($sourceMapped['file'], $sourceMapped['line']) ?></p>
 					<?= BlueScreen::highlightFile($sourceMapped['file'], $sourceMapped['line'], php: false) ?>
 				</div>

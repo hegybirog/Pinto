@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -16,7 +16,7 @@ use ErrorException;
  */
 class Debugger
 {
-	public const Version = '3.0-dev';
+	public const Version = '1.0-dev';
 
 	/** server modes for Debugger::enable() */
 	public const
@@ -24,7 +24,7 @@ class Debugger
 		Production = true,
 		Detect = null;
 
-	public const CookieSecret = 'Zoxigen-debug';
+	public const CookieSecret = 'Pinto-debug';
 
 	/** @deprecated use Debugger::Version */
 	public const VERSION = self::Version;
@@ -396,7 +396,7 @@ class Debugger
 			self::$blueScreen->info = [
 				'PHP ' . PHP_VERSION,
 				$_SERVER['SERVER_SOFTWARE'] ?? null,
-				'Zoxigen ' . self::Version,
+				'Pinto ' . self::Version,
 			];
 		}
 
@@ -408,9 +408,9 @@ class Debugger
 	{
 		if (empty(self::$bar)) {
 			self::$bar = new Bar;
-			self::$bar->addPanel($info = new DefaultBarPanel('info'), 'Zoxigen:info');
+			self::$bar->addPanel($info = new DefaultBarPanel('info'), 'Pinto:info');
 			$info->cpuUsage = self::$cpuUsage;
-			self::$bar->addPanel(new DefaultBarPanel('errors'), 'Zoxigen:errors'); // filled by errorHandler()
+			self::$bar->addPanel(new DefaultBarPanel('errors'), 'Pinto:errors'); // filled by errorHandler()
 		}
 
 		return self::$bar;
@@ -498,7 +498,7 @@ class Debugger
 
 		} elseif (!self::$productionMode) {
 			$html = Helpers::isHtmlMode();
-			echo $html ? '<Zoxigen-div>' : '';
+			echo $html ? '<Pinto-div>' : '';
 			Dumper::dump($var, [
 				Dumper::DEPTH => self::$maxDepth,
 				Dumper::TRUNCATE => self::$maxLength,
@@ -507,7 +507,7 @@ class Debugger
 				Dumper::THEME => self::$dumpTheme,
 				Dumper::KEYS_TO_HIDE => self::$keysToHide,
 			]);
-			echo $html ? '</Zoxigen-div>' : '';
+			echo $html ? '</Pinto-div>' : '';
 		}
 
 		return $var;
@@ -529,7 +529,7 @@ class Debugger
 
 
 	/**
-	 * Dumps information about a variable in Zoxigen Debug Bar.
+	 * Dumps information about a variable in Pinto Debug Bar.
 	 * @PintoSkipLocation
 	 * @return mixed  variable itself
 	 */
@@ -538,7 +538,7 @@ class Debugger
 		if (!self::$productionMode) {
 			static $panel;
 			if (!$panel) {
-				self::getBar()->addPanel($panel = new DefaultBarPanel('dumps'), 'Zoxigen:dumps');
+				self::getBar()->addPanel($panel = new DefaultBarPanel('dumps'), 'Pinto:dumps');
 			}
 
 			$panel->data[] = ['title' => $title, 'dump' => Dumper::toHtml($var, $options + [

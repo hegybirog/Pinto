@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -51,8 +51,8 @@ class BlueScreen
 
 	public function __construct()
 	{
-		$this->collapsePaths = preg_match('#(.+/vendor)/Zoxigen/Zoxigen/src/Zoxigen/BlueScreen$#', strtr(__DIR__, '\\', '/'), $m)
-			? [$m[1] . '/Zoxigen', $m[1] . '/nette', $m[1] . '/latte']
+		$this->collapsePaths = preg_match('#(.+/vendor)/Pinto/Pinto/src/Pinto/BlueScreen$#', strtr(__DIR__, '\\', '/'), $m)
+			? [$m[1] . '/Pinto', $m[1] . '/nette', $m[1] . '/latte']
 			: [dirname(__DIR__)];
 		$this->fileGenerators[] = [self::class, 'generateNewPhpFileContents'];
 		$this->fibers = new \WeakMap;
@@ -119,7 +119,7 @@ class BlueScreen
 	/** @internal */
 	public function renderToAjax(\Throwable $exception, DeferredContent $defer): void
 	{
-		$defer->addSetup('Zoxigen.BlueScreen.loadAjax', Helpers::capture(fn() => $this->renderTemplate($exception, __DIR__ . '/assets/content.phtml')));
+		$defer->addSetup('Pinto.BlueScreen.loadAjax', Helpers::capture(fn() => $this->renderTemplate($exception, __DIR__ . '/assets/content.phtml')));
 	}
 
 
@@ -274,7 +274,7 @@ class BlueScreen
 		$query = ($ex instanceof \ErrorException ? '' : get_debug_type($ex) . ' ')
 			. preg_replace('#\'.*\'|".*"#Us', '', $ex->getMessage());
 		$actions[] = [
-			'link' => 'https://www.google.com/search?sourceid=Zoxigen&q=' . urlencode($query),
+			'link' => 'https://www.google.com/search?sourceid=Pinto&q=' . urlencode($query),
 			'label' => 'search',
 			'external' => true,
 		];
@@ -312,10 +312,10 @@ class BlueScreen
 
 		$source = $php
 			? CodeHighlighter::highlightPhp($source, $line, $column)
-			: '<pre class=Zoxigen-code><div>' . CodeHighlighter::highlightLine(htmlspecialchars($source, ENT_IGNORE, 'UTF-8'), $line, $column) . '</div></pre>';
+			: '<pre class=Pinto-code><div>' . CodeHighlighter::highlightLine(htmlspecialchars($source, ENT_IGNORE, 'UTF-8'), $line, $column) . '</div></pre>';
 
 		if ($editor = Helpers::editorUri($file, $line)) {
-			$source = substr_replace($source, ' title="Ctrl-Click to open in editor" data-Zoxigen-href="' . Helpers::escapeHtml($editor) . '"', 4, 0);
+			$source = substr_replace($source, ' title="Ctrl-Click to open in editor" data-Pinto-href="' . Helpers::escapeHtml($editor) . '"', 4, 0);
 		}
 
 		return $source;
@@ -398,7 +398,7 @@ class BlueScreen
 					return $m[0];
 				}
 
-				return '<a href="' . Helpers::escapeHtml(Helpers::editorUri($r->getFileName(), $r->getStartLine())) . '" class="Zoxigen-editor">' . $m[0] . '</a>';
+				return '<a href="' . Helpers::escapeHtml(Helpers::editorUri($r->getFileName(), $r->getStartLine())) . '" class="Pinto-editor">' . $m[0] . '</a>';
 			},
 			$msg,
 		);
@@ -407,7 +407,7 @@ class BlueScreen
 		$msg = preg_replace_callback(
 			'#([\w\\\\/.:-]+\.(?:php|phpt|phtml|latte|neon))(?|:(\d+)| on line (\d+))?#',
 			fn($m) => @is_file($m[1]) // @ - may trigger error
-				? '<a href="' . Helpers::escapeHtml(Helpers::editorUri($m[1], isset($m[2]) ? (int) $m[2] : null)) . '" class="Zoxigen-editor">' . $m[0] . '</a>'
+				? '<a href="' . Helpers::escapeHtml(Helpers::editorUri($m[1], isset($m[2]) ? (int) $m[2] : null)) . '" class="Pinto-editor">' . $m[0] . '</a>'
 				: $m[0],
 			$msg,
 		);
@@ -426,9 +426,9 @@ class BlueScreen
 		$info = ob_get_clean();
 
 		if (!str_contains($license, '<body')) {
-			echo '<pre class="Zoxigen-dump Zoxigen-light">', Helpers::escapeHtml($info), '</pre>';
+			echo '<pre class="Pinto-dump Pinto-light">', Helpers::escapeHtml($info), '</pre>';
 		} else {
-			$info = str_replace('<table', '<table class="Zoxigen-sortable"', $info);
+			$info = str_replace('<table', '<table class="Pinto-sortable"', $info);
 			echo preg_replace('#^.+<body>|</body>.+\z|<hr />|<h1>Configuration</h1>#s', '', $info);
 		}
 	}

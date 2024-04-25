@@ -1,9 +1,9 @@
 <?php
 
 /**
- * Zoxigen
+ * Pinto
  *
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 

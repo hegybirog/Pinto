@@ -1,5 +1,5 @@
 /**
- * This file is part of the Zoxigen Framework
+ * This file is part of the Pinto Framework
  */
 
 :root {
@@ -240,7 +240,7 @@ Pinto-div:not(a b) .Pinto-dump {
 	overflow: auto;
 }
 
-Pinto-div:not(a b) table .Pinto-dump.Pinto-dump { /* overwrite .Zoxigen-dump.Zoxigen-light etc. */
+Pinto-div:not(a b) table .Pinto-dump.Pinto-dump { /* overwrite .Pinto-dump.Pinto-light etc. */
 	padding: 0;
 	margin: 0;
 	border: none;

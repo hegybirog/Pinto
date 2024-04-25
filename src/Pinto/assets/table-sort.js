@@ -1,14 +1,14 @@
 /**
- * This file is part of the Zoxigen Framework
+ * This file is part of the Pinto Framework
  */
 
-// enables <table class="Zoxigen-sortable">
+// enables <table class="Pinto-sortable">
 class TableSort
 {
 	static init() {
 		document.documentElement.addEventListener('click', (e) => {
 			if ((window.getSelection().type !== 'Range')
-				&& e.target.matches('.Zoxigen-sortable > :first-child > tr:first-child *')
+				&& e.target.matches('.Pinto-sortable > :first-child > tr:first-child *')
 			) {
 				TableSort.sort(e.target.closest('td,th'));
 			}

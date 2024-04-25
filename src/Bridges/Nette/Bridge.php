@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -78,8 +78,8 @@ class Bridge
 	private static function highlightNeon(string $code, int $line): string
 	{
 		$code = htmlspecialchars($code, ENT_IGNORE, 'UTF-8');
-		$code = str_replace(' ', "<span class='Zoxigen-dump-whitespace'>·</span>", $code);
-		$code = str_replace("\t", "<span class='Zoxigen-dump-whitespace'>→   </span>", $code);
+		$code = str_replace(' ', "<span class='Pinto-dump-whitespace'>·</span>", $code);
+		$code = str_replace("\t", "<span class='Pinto-dump-whitespace'>→   </span>", $code);
 		return '<pre class=code><div>'
 			. BlueScreen::highlightLine($code, $line)
 			. '</div></pre>';

@@ -25,14 +25,14 @@ Exec=Pinto-openeditor.sh %u
 Terminal=false
 NoDisplay=true
 Type=Application
-MimeType=x-scheme-handler/editor;" > Zoxigen-openeditor.desktop
+MimeType=x-scheme-handler/editor;" > Pinto-openeditor.desktop
 
 chmod +x open-editor.sh
-chmod +x Zoxigen-openeditor.desktop
+chmod +x Pinto-openeditor.desktop
 
-sudo cp open-editor.sh /usr/bin/Zoxigen-openeditor.sh
-sudo xdg-desktop-menu install Zoxigen-openeditor.desktop
+sudo cp open-editor.sh /usr/bin/Pinto-openeditor.sh
+sudo xdg-desktop-menu install Pinto-openeditor.desktop
 sudo update-desktop-database
-rm Zoxigen-openeditor.desktop
+rm Pinto-openeditor.desktop
 
 echo -e "\e[32;1mDone.\e[0m"

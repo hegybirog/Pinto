@@ -1,7 +1,7 @@
 <?php
 
 
-// creates Zoxigen.phar
+// creates Pinto.phar
 if (!class_exists('Phar') || ini_get('phar.readonly')) {
 	echo "Enable Phar extension and set directive 'phar.readonly=off'.\n";
 	die(1);
@@ -33,11 +33,11 @@ function compressCss(string $s): string
 }
 
 
-@unlink('Zoxigen.phar'); // @ - file may not exist
+@unlink('Pinto.phar'); // @ - file may not exist
 
-$phar = new Phar('Zoxigen.phar');
+$phar = new Phar('Pinto.phar');
 $phar->setStub("<?php
-require 'phar://' . __FILE__ . '/Zoxigen.php';
+require 'phar://' . __FILE__ . '/Pinto.php';
 __HALT_COMPILER();
 ");
 

@@ -1,5 +1,5 @@
 /**
- * This file is part of the Zoxigen Framework
+ * This file is part of the Pinto Framework
  */
 
 const
@@ -19,24 +19,24 @@ class Dumper
 {
 	static init(context) {
 		// full lazy
-		(context || document).querySelectorAll('[data-Zoxigen-snapshot][data-Zoxigen-dump]').forEach((pre) => { // <pre>
-			let snapshot = JSON.parse(pre.getAttribute('data-Zoxigen-snapshot'));
-			pre.removeAttribute('data-Zoxigen-snapshot');
-			pre.appendChild(build(JSON.parse(pre.getAttribute('data-Zoxigen-dump')), snapshot, pre.classList.contains('Zoxigen-collapsed')));
-			pre.removeAttribute('data-Zoxigen-dump');
-			pre.classList.remove('Zoxigen-collapsed');
+		(context || document).querySelectorAll('[data-Pinto-snapshot][data-Pinto-dump]').forEach((pre) => { // <pre>
+			let snapshot = JSON.parse(pre.getAttribute('data-Pinto-snapshot'));
+			pre.removeAttribute('data-Pinto-snapshot');
+			pre.appendChild(build(JSON.parse(pre.getAttribute('data-Pinto-dump')), snapshot, pre.classList.contains('Pinto-collapsed')));
+			pre.removeAttribute('data-Pinto-dump');
+			pre.classList.remove('Pinto-collapsed');
 		});
 
 		// snapshots
-		(context || document).querySelectorAll('meta[itemprop=Zoxigen-snapshot]').forEach((meta) => {
+		(context || document).querySelectorAll('meta[itemprop=Pinto-snapshot]').forEach((meta) => {
 			let snapshot = JSON.parse(meta.getAttribute('content'));
-			meta.parentElement.querySelectorAll('[data-Zoxigen-dump]').forEach((pre) => { // <pre>
-				if (pre.closest('[data-Zoxigen-snapshot]')) { // ignore unrelated <span data-Zoxigen-dump>
+			meta.parentElement.querySelectorAll('[data-Pinto-dump]').forEach((pre) => { // <pre>
+				if (pre.closest('[data-Pinto-snapshot]')) { // ignore unrelated <span data-Pinto-dump>
 					return;
 				}
-				pre.appendChild(build(JSON.parse(pre.getAttribute('data-Zoxigen-dump')), snapshot, pre.classList.contains('Zoxigen-collapsed')));
-				pre.removeAttribute('data-Zoxigen-dump');
-				pre.classList.remove('Zoxigen-collapsed');
+				pre.appendChild(build(JSON.parse(pre.getAttribute('data-Pinto-dump')), snapshot, pre.classList.contains('Pinto-collapsed')));
+				pre.removeAttribute('data-Pinto-dump');
+				pre.classList.remove('Pinto-collapsed');
 			});
 			// <meta> must be left for debug bar panel content
 		});
@@ -48,32 +48,32 @@ class Dumper
 
 		document.documentElement.addEventListener('click', (e) => {
 			let el;
-			// enables <span data-Zoxigen-href=""> & ctrl key
-			if (e.ctrlKey && (el = e.target.closest('[data-Zoxigen-href]'))) {
+			// enables <span data-Pinto-href=""> & ctrl key
+			if (e.ctrlKey && (el = e.target.closest('[data-Pinto-href]'))) {
 				location.href = el.getAttribute('data-Pinto-href');
 				return false;
 			}
 
 		});
 
-		document.documentElement.addEventListener('Zoxigen-beforetoggle', (e) => {
+		document.documentElement.addEventListener('Pinto-beforetoggle', (e) => {
 			let el;
-			// initializes lazy <span data-Zoxigen-dump> inside <pre data-Zoxigen-snapshot>
-			if ((el = e.target.closest('[data-Zoxigen-snapshot]'))) {
-				let snapshot = JSON.parse(el.getAttribute('data-Zoxigen-snapshot'));
-				el.removeAttribute('data-Zoxigen-snapshot');
-				el.querySelectorAll('[data-Zoxigen-dump]').forEach((toggler) => {
+			// initializes lazy <span data-Pinto-dump> inside <pre data-Pinto-snapshot>
+			if ((el = e.target.closest('[data-Pinto-snapshot]'))) {
+				let snapshot = JSON.parse(el.getAttribute('data-Pinto-snapshot'));
+				el.removeAttribute('data-Pinto-snapshot');
+				el.querySelectorAll('[data-Pinto-dump]').forEach((toggler) => {
 					if (!toggler.nextSibling) {
 						toggler.after(document.createTextNode('\n')); // enforce \n after toggler
 					}
-					toggler.nextSibling.after(buildStruct(JSON.parse(toggler.getAttribute('data-Zoxigen-dump')), snapshot, toggler, true, []));
-					toggler.removeAttribute('data-Zoxigen-dump');
+					toggler.nextSibling.after(buildStruct(JSON.parse(toggler.getAttribute('data-Pinto-dump')), snapshot, toggler, true, []));
+					toggler.removeAttribute('data-Pinto-dump');
 				});
 			}
 		});
 
-		document.documentElement.addEventListener('Zoxigen-toggle', (e) => {
-			if (!e.target.matches('.Zoxigen-dump *')) {
+		document.documentElement.addEventListener('Pinto-toggle', (e) => {
+			if (!e.target.matches('.Pinto-dump *')) {
 				return;
 			}
 
@@ -84,10 +84,10 @@ class Dumper
 				toggleChildren(cont, origE.usedIds);
 				return;
 
-			} else if (origE && origE.altKey && cont.querySelector('.Zoxigen-toggle')) { // triggered by alt key
+			} else if (origE && origE.altKey && cont.querySelector('.Pinto-toggle')) { // triggered by alt key
 				if (e.detail.collapsed) { // reopen
-					e.target.classList.toggle('Zoxigen-collapsed', false);
-					cont.classList.toggle('Zoxigen-collapsed', false);
+					e.target.classList.toggle('Pinto-collapsed', false);
+					cont.classList.toggle('Pinto-collapsed', false);
 					e.detail.collapsed = false;
 				}
 
@@ -95,40 +95,40 @@ class Dumper
 				toggleChildren(cont, expand ? {} : false);
 			}
 
-			cont.classList.toggle('Zoxigen-dump-flash', !e.detail.collapsed);
+			cont.classList.toggle('Pinto-dump-flash', !e.detail.collapsed);
 		});
 
 		document.documentElement.addEventListener('animationend', (e) => {
-			if (e.animationName === 'Zoxigen-dump-flash') {
-				e.target.classList.toggle('Zoxigen-dump-flash', false);
+			if (e.animationName === 'Pinto-dump-flash') {
+				e.target.classList.toggle('Pinto-dump-flash', false);
 			}
 		});
 
 		document.addEventListener('mouseover', (e) => {
-			if (!e.target.matches('.Zoxigen-dump *')) {
+			if (!e.target.matches('.Pinto-dump *')) {
 				return;
 			}
 
 			let el;
 
-			if (e.target.matches('.Zoxigen-dump-hash') && (el = e.target.closest('Zoxigen-div'))) {
-				el.querySelectorAll('.Zoxigen-dump-hash').forEach((el) => {
+			if (e.target.matches('.Pinto-dump-hash') && (el = e.target.closest('Pinto-div'))) {
+				el.querySelectorAll('.Pinto-dump-hash').forEach((el) => {
 					if (el.textContent === e.target.textContent) {
-						el.classList.add('Zoxigen-dump-highlight');
+						el.classList.add('Pinto-dump-highlight');
 					}
 				});
 				return;
 			}
 
-			if ((el = e.target.closest('.Zoxigen-toggle')) && !el.title) {
+			if ((el = e.target.closest('.Pinto-toggle')) && !el.title) {
 				el.title = HINT_ALT;
 			}
 		});
 
 		document.addEventListener('mouseout', (e) => {
-			if (e.target.matches('.Zoxigen-dump-hash')) {
-				document.querySelectorAll('.Zoxigen-dump-hash.Zoxigen-dump-highlight').forEach((el) => {
-					el.classList.remove('Zoxigen-dump-highlight');
+			if (e.target.matches('.Pinto-dump-hash')) {
+				document.querySelectorAll('.Pinto-dump-hash.Pinto-dump-highlight').forEach((el) => {
+					el.classList.remove('Pinto-dump-highlight');
 				});
 			}
 		});
@@ -146,7 +146,7 @@ function build(data, repository, collapsed, parentIds, keyType) {
 		return createEl(null, null, [
 			createEl(
 				'span',
-				{'class': 'Zoxigen-dump-' + type.replace('ean', '')},
+				{'class': 'Pinto-dump-' + type.replace('ean', '')},
 				[data + '']
 			)
 		]);
@@ -175,22 +175,22 @@ function build(data, repository, collapsed, parentIds, keyType) {
 			return createEl(null, null, [
 				createEl(
 					'span',
-					{'class': 'Zoxigen-dump-string'},
-					{html: '<span class="Zoxigen-dump-lq">\'</span>' + s + '<span>\'</span>'}
+					{'class': 'Pinto-dump-string'},
+					{html: '<span class="Pinto-dump-lq">\'</span>' + s + '<span>\'</span>'}
 				),
 			]);
 
 		} else if (keyType !== undefined) {
 			if (type !== 'string') {
-				s = '<span class="Zoxigen-dump-lq">\'</span>' + s + '<span>\'</span>';
+				s = '<span class="Pinto-dump-lq">\'</span>' + s + '<span>\'</span>';
 			}
 
 			const classes = [
-				'Zoxigen-dump-public',
-				'Zoxigen-dump-protected',
-				'Zoxigen-dump-private',
-				'Zoxigen-dump-dynamic',
-				'Zoxigen-dump-virtual',
+				'Pinto-dump-public',
+				'Pinto-dump-protected',
+				'Pinto-dump-private',
+				'Pinto-dump-dynamic',
+				'Pinto-dump-virtual',
 			];
 			return createEl(null, null, [
 				createEl(
@@ -208,15 +208,15 @@ function build(data, repository, collapsed, parentIds, keyType) {
 		if (count) {
 			let collapsed = count >= COLLAPSE_COUNT;
 			return createEl(null, null, [
-				createEl('span', {'class': collapsed ? 'Zoxigen-toggle Zoxigen-collapsed' : 'Zoxigen-toggle'}, ['string']),
+				createEl('span', {'class': collapsed ? 'Pinto-toggle Pinto-collapsed' : 'Pinto-toggle'}, ['string']),
 				'\n',
 				createEl(
 					'div',
 					{
-						'class': 'Zoxigen-dump-string' + (collapsed ? ' Zoxigen-collapsed' : ''),
+						'class': 'Pinto-dump-string' + (collapsed ? ' Pinto-collapsed' : ''),
 						'title': data.length + (data.bin ? ' bytes' : ' characters'),
 					},
-					{html: '<span class="Zoxigen-dump-lq">\'</span>' + s + '<span>\'</span>'}
+					{html: '<span class="Pinto-dump-lq">\'</span>' + s + '<span>\'</span>'}
 				),
 			]);
 		}
@@ -225,7 +225,7 @@ function build(data, repository, collapsed, parentIds, keyType) {
 			createEl(
 				'span',
 				{
-					'class': 'Zoxigen-dump-string',
+					'class': 'Pinto-dump-string',
 					'title': data.length + (data.bin ? ' bytes' : ' characters'),
 				},
 				{html: '<span>\'</span>' + s + '<span>\'</span>'}
@@ -234,12 +234,12 @@ function build(data, repository, collapsed, parentIds, keyType) {
 
 	} else if (data.number) {
 		return createEl(null, null, [
-			createEl('span', {'class': 'Zoxigen-dump-number'}, [data.number])
+			createEl('span', {'class': 'Pinto-dump-number'}, [data.number])
 		]);
 
 	} else if (data.text !== undefined) {
 		return createEl(null, null, [
-			createEl('span', {class: 'Zoxigen-dump-virtual'}, [data.text])
+			createEl('span', {class: 'Pinto-dump-virtual'}, [data.text])
 		]);
 
 	} else { // object || resource || array
@@ -250,16 +250,16 @@ function build(data, repository, collapsed, parentIds, keyType) {
 
 		let span = data.array !== undefined
 			? [
-				createEl('span', {'class': 'Zoxigen-dump-array'}, ['array']),
+				createEl('span', {'class': 'Pinto-dump-array'}, ['array']),
 				' (' + (data.length || data.items.length) + ')'
 			]
 			: [
 				createEl('span', {
-					'class': data.object ? 'Zoxigen-dump-object' : 'Zoxigen-dump-resource',
+					'class': data.object ? 'Pinto-dump-object' : 'Pinto-dump-resource',
 					title: data.editor ? 'Declared in file ' + data.editor.file + ' on line ' + data.editor.line + (data.editor.url ? '\n' + HINT_CTRL : '') + '\n' + HINT_ALT : null,
 					'data-Pinto-href': data.editor ? data.editor.url : null
 				}, nameEl),
-				...(id ? [' ', createEl('span', {'class': 'Zoxigen-dump-hash'}, [data.resource ? '@' + id.substr(1) : '#' + id])] : [])
+				...(id ? [' ', createEl('span', {'class': 'Pinto-dump-hash'}, [data.resource ? '@' + id.substr(1) : '#' + id])] : [])
 			];
 
 		parentIds = parentIds ? parentIds.slice() : [];
@@ -272,7 +272,7 @@ function build(data, repository, collapsed, parentIds, keyType) {
 		}
 
 		collapsed = collapsed === true || data.collapsed || (data.items && data.items.length >= collapseCount);
-		let toggle = createEl('span', {'class': collapsed ? 'Zoxigen-toggle Zoxigen-collapsed' : 'Zoxigen-toggle'}, span);
+		let toggle = createEl('span', {'class': collapsed ? 'Pinto-toggle Pinto-collapsed' : 'Pinto-toggle'}, span);
 
 		return createEl(null, null, [
 			toggle,
@@ -295,12 +295,12 @@ function buildStruct(data, repository, toggle, collapsed, parentIds) {
 
 	let cut = data.items && data.length > data.items.length;
 	let type = data.object ? TYPE_OBJECT : data.resource ? TYPE_RESOURCE : TYPE_ARRAY;
-	let div = createEl('div', {'class': collapsed ? 'Zoxigen-collapsed' : null});
+	let div = createEl('div', {'class': collapsed ? 'Pinto-collapsed' : null});
 
 	if (collapsed) {
 		let handler;
-		toggle.addEventListener('Zoxigen-toggle', handler = function() {
-			toggle.removeEventListener('Zoxigen-toggle', handler);
+		toggle.addEventListener('Pinto-toggle', handler = function() {
+			toggle.removeEventListener('Pinto-toggle', handler);
 			createItems(div, data.items, type, repository, parentIds, null);
 			if (cut) {
 				createEl(div, null, ['…\n']);
@@ -351,7 +351,7 @@ function createItems(el, items, type, repository, parentIds, collapsed) {
 		createEl(el, null, [
 			build(key, null, null, null, type === TYPE_ARRAY ? TYPE_ARRAY : vis),
 			type === TYPE_ARRAY ? ' => ' : ': ',
-			...(ref ? [createEl('span', {'class': 'Zoxigen-dump-hash'}, ['&' + ref]), ' '] : []),
+			...(ref ? [createEl('span', {'class': 'Pinto-dump-hash'}, ['&' + ref]), ' '] : []),
 			tmp = build(val, repository, collapsed, parentIds),
 			tmp.lastElementChild.tagName === 'DIV' ? '' : '\n',
 		]);
@@ -362,9 +362,9 @@ function createItems(el, items, type, repository, parentIds, collapsed) {
 function toggleChildren(cont, usedIds) {
 	let hashEl, id;
 
-	cont.querySelectorAll(':scope > .Zoxigen-toggle').forEach((el) => {
-		hashEl = (el.querySelector('.Zoxigen-dump-hash') || el.previousElementSibling);
-		id = hashEl && hashEl.matches('.Zoxigen-dump-hash') ? hashEl.textContent : null;
+	cont.querySelectorAll(':scope > .Pinto-toggle').forEach((el) => {
+		hashEl = (el.querySelector('.Pinto-dump-hash') || el.previousElementSibling);
+		id = hashEl && hashEl.matches('.Pinto-dump-hash') ? hashEl.textContent : null;
 
 		if (!usedIds || (id && usedIds[id])) {
 			Pinto.Toggle.toggle(el, false);

@@ -33,7 +33,7 @@ namespace Pinto;
 <?php $bottomPanels = [] ?>
 <?php foreach ($this->renderPanels(null) as $panel): ?>
 <?php if (!empty($panel->bottom)) { $bottomPanels[] = $panel; continue; } ?>
-<?php $collapsedClass = !isset($panel->collapsed) || $panel->collapsed ? ' Zoxigen-collapsed' : ''; ?>
+<?php $collapsedClass = !isset($panel->collapsed) || $panel->collapsed ? ' Pinto-collapsed' : ''; ?>
 		<section class="Pinto-section">
 			<h2 class="Pinto-section-label"><a href="#" data-Pinto-ref="^+" class="Pinto-toggle<?= $collapsedClass ?>"><?= Helpers::escapeHtml($panel->tab) ?></a></h2>
 

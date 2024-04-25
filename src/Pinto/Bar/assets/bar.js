@@ -1,5 +1,5 @@
 /**
- * This file is part of the Zoxigen Framework
+ * This file is part of the Pinto Framework
  */
 
 let requestId = document.currentScript.dataset.id,
@@ -66,11 +66,11 @@ class Panel
 			}
 		});
 
-		elem.addEventListener('Zoxigen-toggle', () => {
+		elem.addEventListener('Pinto-toggle', () => {
 			this.reposition();
 		});
 
-		elem.querySelectorAll('.Zoxigen-icons a').forEach((link) => {
+		elem.querySelectorAll('.Pinto-icons a').forEach((link) => {
 			link.addEventListener('click', (e) => {
 				if (link.dataset.PintoAction === 'close') {
 					this.toPeek();
@@ -82,7 +82,7 @@ class Panel
 			});
 		});
 
-		if (this.is('Zoxigen-panel-persist')) {
+		if (this.is('Pinto-panel-persist')) {
 			Pinto.Toggle.persist(elem);
 		}
 	}
@@ -152,15 +152,15 @@ class Panel
 
 		let doc = win.document;
 		doc.write('<!DOCTYPE html><meta charset="utf-8">'
-		+ '<script src="' + (baseUrl.replace(/&/g, '&amp;').replace(/"/g, '&quot;')) + '_Pinto_bar=js&amp;XDEBUG_SESSION_STOP=1" onload="Zoxigen.Dumper.init()" async></script>'
-		+ '<body id="Zoxigen-debug">'
+		+ '<script src="' + (baseUrl.replace(/&/g, '&amp;').replace(/"/g, '&quot;')) + '_Pinto_bar=js&amp;XDEBUG_SESSION_STOP=1" onload="Pinto.Dumper.init()" async></script>'
+		+ '<body id="Pinto-debug">'
 		);
 
 		let meta = this.elem.parentElement.lastElementChild;
-		doc.body.innerHTML = '<Zoxigen-div itemscope>'
-			+ '<div class="Zoxigen-panel Zoxigen-mode-window" id="' + this.elem.id + '">' + this.elem.dataset.PintoContent + '</div>'
+		doc.body.innerHTML = '<Pinto-div itemscope>'
+			+ '<div class="Pinto-panel Pinto-mode-window" id="' + this.elem.id + '">' + this.elem.dataset.PintoContent + '</div>'
 			+ meta.outerHTML
-			+ '</Zoxigen-div>';
+			+ '</Pinto-div>';
 		evalScripts(doc.body);
 		if (this.elem.querySelector('h1')) {
 			doc.title = this.elem.querySelector('h1').textContent;
@@ -236,23 +236,23 @@ class Panel
 	}
 }
 
-Panel.PEEK = 'Zoxigen-mode-peek';
-Panel.FLOAT = 'Zoxigen-mode-float';
-Panel.WINDOW = 'Zoxigen-mode-window';
-Panel.FOCUSED = 'Zoxigen-focused';
-Panel.RESIZED = 'Zoxigen-panel-resized';
+Panel.PEEK = 'Pinto-mode-peek';
+Panel.FLOAT = 'Pinto-mode-float';
+Panel.WINDOW = 'Pinto-mode-window';
+Panel.FOCUSED = 'Pinto-focused';
+Panel.RESIZED = 'Pinto-panel-resized';
 Panel.zIndexCounter = 1;
 
 
 class Bar
 {
 	init() {
-		this.id = 'Zoxigen-debug-bar';
+		this.id = 'Pinto-debug-bar';
 		this.elem = document.getElementById(this.id);
 
 		draggable(this.elem, {
 			handles: this.elem.querySelectorAll('li:first-child'),
-			draggedClass: 'Zoxigen-dragged',
+			draggedClass: 'Pinto-dragged',
 			stop: () => {
 				this.savePosition();
 			}
@@ -301,7 +301,7 @@ class Bar
 			});
 
 			link.addEventListener('mouseenter', (e) => {
-				if (e.buttons || !link.rel || elem.classList.contains('Zoxigen-dragged')) {
+				if (e.buttons || !link.rel || elem.classList.contains('Pinto-dragged')) {
 					return;
 				}
 
@@ -328,7 +328,7 @@ class Bar
 			link.addEventListener('mouseleave', () => {
 				clearTimeout(this.displayTimeout);
 
-				if (link.rel && !elem.classList.contains('Zoxigen-dragged')) {
+				if (link.rel && !elem.classList.contains('Pinto-dragged')) {
 					Debug.panels[link.rel].blur();
 				}
 			});
@@ -339,8 +339,8 @@ class Bar
 
 	autoHideLabels() {
 		let width = getWindowSize().width;
-		this.elem.querySelectorAll('.Zoxigen-row').forEach((row) => {
-			let i, labels = row.querySelectorAll('.Zoxigen-label');
+		this.elem.querySelectorAll('.Pinto-row').forEach((row) => {
+			let i, labels = row.querySelectorAll('.Pinto-label');
 			for (i = 0; i < labels.length && row.clientWidth < width; i++) {
 				labels.item(i).hidden = false;
 			}
@@ -392,15 +392,15 @@ class Debug
 	static init(content) {
 		Debug.bar = new Bar;
 		Debug.panels = {};
-		Debug.layer = document.createElement('Zoxigen-div');
-		Debug.layer.setAttribute('id', 'Zoxigen-debug');
+		Debug.layer = document.createElement('Pinto-div');
+		Debug.layer.setAttribute('id', 'Pinto-debug');
 		Debug.layer.innerHTML = content;
 		(document.body || document.documentElement).appendChild(Debug.layer);
 		evalScripts(Debug.layer);
 		Debug.layer.style.display = 'block';
 		Debug.bar.init();
 
-		Debug.layer.querySelectorAll('.Zoxigen-panel').forEach((panel) => {
+		Debug.layer.querySelectorAll('.Pinto-panel').forEach((panel) => {
 			Debug.panels[panel.id] = new Panel(panel.id);
 			Debug.panels[panel.id].restorePosition();
 		});
@@ -413,7 +413,7 @@ class Debug
 
 
 	static loadAjax(content) {
-		let rows = Debug.bar.elem.querySelectorAll('.Zoxigen-row[data-Zoxigen-group=ajax]');
+		let rows = Debug.bar.elem.querySelectorAll('.Pinto-row[data-Pinto-group=ajax]');
 		rows = Array.from(rows).reverse();
 		let max = getOption('MaxAjaxRows');
 		rows.forEach((row) => {
@@ -440,9 +440,9 @@ class Debug
 		Debug.layer.insertAdjacentHTML('beforeend', content.panels);
 		evalScripts(Debug.layer);
 		Debug.bar.elem.insertAdjacentHTML('beforeend', content.bar);
-		let ajaxBar = Debug.bar.elem.querySelector('.Zoxigen-row:last-child');
+		let ajaxBar = Debug.bar.elem.querySelector('.Pinto-row:last-child');
 
-		Debug.layer.querySelectorAll('.Zoxigen-panel').forEach((panel) => {
+		Debug.layer.querySelectorAll('.Pinto-panel').forEach((panel) => {
 			if (!Debug.panels[panel.id]) {
 				Debug.panels[panel.id] = new Panel(panel.id);
 				Debug.panels[panel.id].restorePosition();
@@ -488,7 +488,7 @@ class Debug
 
 			if (getOption('AutoRefresh') && new URL(arguments[1], location.origin).host === location.host) {
 				let reqId = Pinto.getAjaxHeader();
-				this.setRequestHeader('X-Zoxigen-Ajax', reqId);
+				this.setRequestHeader('X-Pinto-Ajax', reqId);
 				this.addEventListener('load', function() {
 					if (this.getAllResponseHeaders().match(/^X-Pinto-Ajax: 1/mi)) {
 						Debug.loadScript(baseUrl + '_Pinto_bar=content-ajax.' + reqId + '&XDEBUG_SESSION_STOP=1&v=' + Math.random());
@@ -500,15 +500,15 @@ class Debug
 		let oldFetch = window.fetch;
 		window.fetch = function(request, options) {
 			request = request instanceof Request ? request : new Request(request, options || {});
-			let reqId = request.headers.get('X-Zoxigen-Ajax');
+			let reqId = request.headers.get('X-Pinto-Ajax');
 
 			if (getOption('AutoRefresh') && !reqId && new URL(request.url, location.origin).host === location.host) {
 				reqId = Pinto.getAjaxHeader();
-				request.headers.set('X-Zoxigen-Ajax', reqId);
+				request.headers.set('X-Pinto-Ajax', reqId);
 			}
 
 			return oldFetch(request).then((response) => {
-				if (response instanceof Response && response.headers.has('X-Zoxigen-Ajax') && response.headers.get('X-Zoxigen-Ajax')[0] === '1') {
+				if (response instanceof Response && response.headers.has('X-Pinto-Ajax') && response.headers.get('X-Pinto-Ajax')[0] === '1') {
 					Debug.loadScript(baseUrl + '_Pinto_bar=content-ajax.' + reqId + '&XDEBUG_SESSION_STOP=1&v=' + Math.random());
 				}
 

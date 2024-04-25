@@ -1,10 +1,10 @@
 /**
- * This file is part of the Zoxigen Framework
+ * This file is part of the Pinto Framework
  */
 
 const MOVE_THRESHOLD = 100;
 
-// enables <a class="Zoxigen-toggle" href="#"> or <span data-Zoxigen-ref="#"> toggling
+// enables <a class="Pinto-toggle" href="#"> or <span data-Pinto-ref="#"> toggling
 class Toggle
 {
 	static init() {
@@ -17,7 +17,7 @@ class Toggle
 			let el;
 			if (
 				!e.shiftKey && !e.ctrlKey && !e.metaKey
-				&& (el = e.target.closest('.Zoxigen-toggle'))
+				&& (el = e.target.closest('.Pinto-toggle'))
 				&& Math.pow(start[0] - e.clientX, 2) + Math.pow(start[1] - e.clientY, 2) < MOVE_THRESHOLD
 			) {
 				Toggle.toggle(el, undefined, e);
@@ -31,15 +31,15 @@ class Toggle
 
 	// changes element visibility
 	static toggle(el, expand, e) {
-		let collapsed = el.classList.contains('Zoxigen-collapsed'),
-			ref = el.getAttribute('data-Zoxigen-ref') || el.getAttribute('href', 2),
+		let collapsed = el.classList.contains('Pinto-collapsed'),
+			ref = el.getAttribute('data-Pinto-ref') || el.getAttribute('href', 2),
 			dest = el;
 
 		if (typeof expand === 'undefined') {
 			expand = collapsed;
 		}
 
-		el.dispatchEvent(new CustomEvent('Zoxigen-beforetoggle', {
+		el.dispatchEvent(new CustomEvent('Pinto-beforetoggle', {
 			bubbles: true,
 			detail: {collapsed: !expand, originalEvent: e}
 		}));
@@ -55,10 +55,10 @@ class Toggle
 		dest = ref[3] ? Toggle.nextElement(dest.nextElementSibling, ref[4]) : dest;
 		dest = ref[5] ? dest.querySelector(ref[5]) : dest;
 
-		el.classList.toggle('Zoxigen-collapsed', !expand);
-		dest.classList.toggle('Zoxigen-collapsed', !expand);
+		el.classList.toggle('Pinto-collapsed', !expand);
+		dest.classList.toggle('Pinto-collapsed', !expand);
 
-		el.dispatchEvent(new CustomEvent('Zoxigen-toggle', {
+		el.dispatchEvent(new CustomEvent('Pinto-toggle', {
 			bubbles: true,
 			detail: {relatedTarget: dest, collapsed: !expand, originalEvent: e}
 		}));
@@ -68,13 +68,13 @@ class Toggle
 	// save & restore toggles
 	static persist(baseEl, restore) {
 		let saved = [];
-		baseEl.addEventListener('Zoxigen-toggle', (e) => {
+		baseEl.addEventListener('Pinto-toggle', (e) => {
 			if (saved.indexOf(e.target) < 0) {
 				saved.push(e.target);
 			}
 		});
 
-		let toggles = JSON.parse(sessionStorage.getItem('Zoxigen-toggles-' + baseEl.id));
+		let toggles = JSON.parse(sessionStorage.getItem('Pinto-toggles-' + baseEl.id));
 		if (toggles && restore !== false) {
 			toggles.forEach((item) => {
 				let el = baseEl;
@@ -91,14 +91,14 @@ class Toggle
 
 		window.addEventListener('pagehide', () => {
 			toggles = saved.map((el) => {
-				let item = {path: [], text: el.textContent, expand: !el.classList.contains('Zoxigen-collapsed')};
+				let item = {path: [], text: el.textContent, expand: !el.classList.contains('Pinto-collapsed')};
 				do {
 					item.path.unshift(Array.from(el.parentNode.children).indexOf(el));
 					el = el.parentNode;
 				} while (el && el !== baseEl);
 				return item;
 			});
-			sessionStorage.setItem('Zoxigen-toggles-' + baseEl.id, JSON.stringify(toggles));
+			sessionStorage.setItem('Pinto-toggles-' + baseEl.id, JSON.stringify(toggles));
 		});
 	}
 

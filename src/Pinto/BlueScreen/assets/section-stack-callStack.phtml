@@ -33,29 +33,29 @@ if (!$stack) {
 
 		<div class="Pinto-callstack-callee">
 <?php if ($clickable): ?>
-			<a href="#" data-Pinto-ref="^div + div" class="Pinto-toggle<?php if ($expanded !== $key) echo ' Zoxigen-collapsed' ?>"><?php endif ?>
+			<a href="#" data-Pinto-ref="^div + div" class="Pinto-toggle<?php if ($expanded !== $key) echo ' Pinto-collapsed' ?>"><?php endif ?>
 <?php if (isset($row['class'])) echo Helpers::escapeHtml($row['class']), '::' ?><b><?= Helpers::escapeHtml($row['function']) ?></b> <?= empty($row['args']) ? '()' : '(...)' ?>
 <?php if ($clickable): ?></a><?php endif ?>
 
 		</div>
 
 <?php	if ($clickable): ?>
-		<div class="Pinto-callstack-additional<?php if ($expanded !== $key) echo ' Zoxigen-collapsed' ?>">
+		<div class="Pinto-callstack-additional<?php if ($expanded !== $key) echo ' Pinto-collapsed' ?>">
 <?php $sourceOriginal = isset($row['file']) && @is_file($row['file']) ? [$row['file'], $row['line']] : null // @ - may trigger error ?>
 <?php $sourceMapped = $sourceOriginal ? Debugger::mapSource(...$sourceOriginal) : null ?>
 <?php if ($sourceOriginal && $sourceMapped): ?>
 			<div class="Pinto-tabs">
 				<ul class="Pinto-tab-bar">
-					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>"><a href="#">PHP</a></li>
-					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>"><a href="#"><?= Helpers::escapeHtml($sourceMapped['label']) ?></a></li>
+					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? '' : ' Pinto-active' ?>"><a href="#">PHP</a></li>
+					<li class="Pinto-tab-label<?= $sourceMapped['active'] ? ' Pinto-active' : '' ?>"><a href="#"><?= Helpers::escapeHtml($sourceMapped['label']) ?></a></li>
 				</ul>
 
 				<div>
-					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? '' : ' Zoxigen-active' ?>">
+					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? '' : ' Pinto-active' ?>">
 						<?= BlueScreen::highlightFile(...$sourceOriginal) ?>
 					</div>
 
-					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? ' Zoxigen-active' : '' ?>">
+					<div class="Pinto-tab-panel<?= $sourceMapped['active'] ? ' Pinto-active' : '' ?>">
 						<?= BlueScreen::highlightFile($sourceMapped['file'], $sourceMapped['line'], php: false) ?>
 					</div>
 				</div>

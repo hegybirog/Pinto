@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -11,10 +11,10 @@ namespace Pinto;
 
 class FileSession implements SessionStorage
 {
-	private const FilePrefix = 'Zoxigen-';
+	private const FilePrefix = 'Pinto-';
 	private const CookieLifetime = 31_557_600;
 
-	public string $cookieName = 'Zoxigen-session';
+	public string $cookieName = 'Pinto-session';
 
 	/** probability that the clean() routine is started */
 	public float $gcProbability = 0.001;

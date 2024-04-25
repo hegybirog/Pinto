@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -31,7 +31,7 @@ class Helpers
 			$file = strtr($file, '/', DIRECTORY_SEPARATOR);
 
 			return self::formatHtml(
-				'<a href="%" title="%" class="Zoxigen-editor">%<b>%</b>%</a>',
+				'<a href="%" title="%" class="Pinto-editor">%<b>%</b>%</a>',
 				$editor,
 				$origFile . ($line ? ":$line" : ''),
 				rtrim(dirname($file), DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR,
@@ -470,7 +470,7 @@ class Helpers
 	{
 		$stack = ['0'];
 		$s = preg_replace_callback(
-			'#<\w+(?: class=["\']Zoxigen-(?:dump-)?([\w-]+)["\'])?[^>]*>|</\w+>#',
+			'#<\w+(?: class=["\']Pinto-(?:dump-)?([\w-]+)["\'])?[^>]*>|</\w+>#',
 			function ($m) use ($colors, &$stack): string {
 				if ($m[0][1] === '/') {
 					array_pop($stack);

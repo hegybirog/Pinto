@@ -1,8 +1,8 @@
 <?php
 
 /**
- * This file is part of the Zoxigen Framework
- * Copyright (c) Zoxigen (http://zoxigen.com)
+ * This file is part of the Pinto Framework
+ * Copyright (c) Pinto (http://zoxigen.com)
  */
 
 
@@ -174,7 +174,7 @@ class Logger implements ILogger
 			[
 				'headers' => implode("\n", [
 					'From: ' . ($this->fromEmail ?: "noreply@$host"),
-					'X-Mailer: Zoxigen',
+					'X-Mailer: Pinto',
 					'Content-Type: text/plain; charset=UTF-8',
 					'Content-Transfer-Encoding: 8bit',
 				]) . "\n",
